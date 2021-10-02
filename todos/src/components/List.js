@@ -111,7 +111,8 @@ function MyComponent() {
           <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
               <CardContent sx={{color:"white"}}>LISTS</CardContent>
           <Button>
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon>
+          <Link to={"/todo/project/id/"+id+"/addlist"}>
+              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon></Link>
           </Button>
           <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
           </Box></Box>

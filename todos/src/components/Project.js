@@ -66,8 +66,9 @@ function MyComponent() {
             <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
           <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
               <CardContent sx={{color:"white"}}>PROJECTS</CardContent>
-          <Button>
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon>
+          <Button onClick >
+              <Link to="/todo/project/addproject">
+              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon></Link>
           </Button>
           <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
           </Box></Box>
@@ -102,7 +103,8 @@ function MyComponent() {
     
     const search = useLocation().search;
     const userName = new URLSearchParams(search).get('Token');
-    localStorage.setItem("token",userName)
+    if(userName){
+    localStorage.setItem("token",userName)}
             console.log(localStorage.getItem("token"));
        return (MyComponent());
   }

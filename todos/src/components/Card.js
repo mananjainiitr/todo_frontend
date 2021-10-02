@@ -97,9 +97,10 @@ function MyComponent() {
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
             <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
           <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
-              <CardContent sx={{color:"white"}}>LISTS</CardContent>
+              <CardContent sx={{color:"white"}}>Cards</CardContent>
           <Button>
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon>
+              <Link to = {"/todo/project/id/"+id1+"/list/id/"+id2+"/addcard"}>
+              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon></Link>
           </Button>
           <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
           </Box></Box>
@@ -109,7 +110,7 @@ function MyComponent() {
                 <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
                  <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
                        
-                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{item['cardtitle']}</Typography> 
+                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{item['cardtitle']}</Typography>
                      <Typography sx={{ mb: 1.5 }} color="text.secondary">{item['desc']}</Typography>
                      <Typography sx={{ mb: 1.5 }} color="text.secondary">Start Date : {DateAndTimePickers(item['start_date'],"Start date :")}</Typography>
                      <Typography sx={{ mb: 1.5 }} color="text.secondary">Due Date : {DateAndTimePickers(item['due_date'],'Due Date :')}</Typography>

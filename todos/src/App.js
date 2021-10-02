@@ -16,6 +16,8 @@ import Card from './components/Card';
 import  Addproject  from './components/addproject';
 import  Header  from './components/Header';
 import Cards from './components/Card';
+import Addlist from './components/addlist';
+import Addcard from './components/addcard';
 // import Addproject from "./pages/ExplorePage";
 
 export default function App() {
@@ -39,14 +41,24 @@ export default function App() {
           </ul>
         </nav> */}
         <Switch> 
+          <Route path="/todo/project/id/:id1/list/id/:id2/addcard">
+            <Addcard />
+          </Route>
+          
         <Route path="/todo/project/id/:id1/list/id/:id2/cards">
           <Cards />
         </Route> 
+        <Route path="/todo/project/id/:id/addlist">
+          <Addlist />
+        </Route>
           <Route path="/todo/project/id/:id/list">
           <List />
         </Route> 
         <Route path="/todo/login">
           <Login />
+        </Route>
+        <Route path="/todo/project/addproject">
+        <Addproject />
         </Route>
         <Route path="/todo/project">
           <Project />
@@ -56,9 +68,7 @@ export default function App() {
         </Route> */}
        
        
-        <Route path="/todo/addproject">
-        <Addproject />
-        </Route>
+        
         <Route path="/">
           
         </Route>
