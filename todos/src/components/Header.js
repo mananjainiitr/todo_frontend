@@ -17,7 +17,7 @@ const styles = {
 };
 
 
-export default function Header() {
+export default function Header(props) {
     return(
       <header style={{background:'rgb(100, 53, 201)'}}>
           <Box sx={{ width:'100vw',display:"flex",justifyContent:'center'}}>

@@ -13,8 +13,11 @@ import Login from './components/Login';
 import Project from './components/Project';
 import List from './components/List';
 import Card from './components/Card';
-import Addproject from './components/addproject';
+import  Addproject  from './components/addproject';
 import  Header  from './components/Header';
+import Cards from './components/Card';
+// import Addproject from "./pages/ExplorePage";
+
 export default function App() {
   return (<Router>
       <Header />
@@ -36,6 +39,9 @@ export default function App() {
           </ul>
         </nav> */}
         <Switch> 
+        <Route path="/todo/project/id/:id1/list/id/:id2/cards">
+          <Cards />
+        </Route> 
           <Route path="/todo/project/id/:id/list">
           <List />
         </Route> 
@@ -49,12 +55,10 @@ export default function App() {
           <Button />
         </Route> */}
        
-        <Route path="/todo/card">
-          <Card />
-        </Route> 
+       
         <Route path="/todo/addproject">
-          <Addproject />
-        </Route> 
+        <Addproject />
+        </Route>
         <Route path="/">
           
         </Route>

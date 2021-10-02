@@ -66,9 +66,10 @@ function MyComponent() {
     // const projid = new URLSearchParams(search).get('project');
     const { id } = useParams();
     console.log(id);
+    const tokenid = localStorage.getItem("token");
     useEffect(() => {
       axios.get("http://localhost:8000/todo/viewsets/project/id/"+id+"/list",{
-        headers: { 'Authorization':'Token 38ee222727bb2bf75f9091c5b395532345a784b3',}
+        headers: { 'Authorization':tokenid,}
       })
         .then(
           (result) => {
@@ -125,7 +126,7 @@ function MyComponent() {
                      <Typography sx={{ mb: 1.5 }} color="text.secondary">Start Date : {DateAndTimePickers(item['start_date'],"Start date :")}</Typography>
                      <Typography sx={{ mb: 1.5 }} color="text.secondary">Due Date : {DateAndTimePickers(item['due_date'],'Due Date :')}</Typography>
                      <CardActions>
-                     <Button size="small"><Link sx={{textDecoration:'None'}} to={"/todo/project/id/"+item.id+"/list"}>View Cards</Link></Button>
+                     <Button size="small"><Link sx={{textDecoration:'None'}} to={"/todo/project/id/"+id+"/list/id/"+item.id+"/cards"}>View Cards</Link></Button>
                      
                      </CardActions>
                      <Typography variant="body2"><h5>Created By : {item['creator']}</h5></Typography>
