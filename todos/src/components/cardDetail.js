@@ -46,14 +46,8 @@ const styles = theme => ({
     );
   }
   
-function HomeIcon(props) {
-    return (
-      <SvgIcon {...props}>
-        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-      </SvgIcon>
-    );
-  }
-function MyComponent() {
+
+function MyComponent(id1,id2,id3) {
     
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -62,19 +56,19 @@ function MyComponent() {
     // this useEffect will run once
     // similar to componentDidMount()
     var token = localStorage.getItem("token");
-    const { id1 } = useParams();
-    const { id2 }= useParams();
+    
     const tokenid = localStorage.getItem("token");
     useEffect(() => {
-      axios.get("http://localhost:8000/todo/viewsets/project/id/"+id1+"/list/id/"+id2+"/card",{
+      axios.get("http://localhost:8000/todo/viewsets/project/id/"+id1+"/list/id/"+id2+"/card/"+id3,{
         headers: { 'Authorization':tokenid,}
       })
         .then(
           (result) => {
             console.log(result);
+            
+            setItems(result['data']);
+            items = result['data'];
             setIsLoaded(true);
-            setItems(result['data']['results']);
-            items = result['data']['results'];
             // console.log(items);
             
           },
@@ -95,48 +89,39 @@ function MyComponent() {
     } else {
       return (
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
-            <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
-              <CardContent sx={{color:"white"}}>Cards</CardContent>
-          <Button>
-              <Link to = {"/todo/project/id/"+id1+"/list/id/"+id2+"/addcard"}>
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon></Link>
-          </Button>
-          <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
-          </Box></Box>
-          <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
-          {items.map(item => (
-            <li key={item.id}>
+            
+         
+          
+            <li key={items.id}>
                 <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
                  <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
                        
-                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{item['cardtitle']}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{item['desc']}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Start Date : {DateAndTimePickers(item['start_date'],"Start date :")}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Due Date : {DateAndTimePickers(item['due_date'],'Due Date :')}</Typography>
+                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{items['cardtitle']}</Typography>
+                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{items['desc']}</Typography>
+                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Start Date : {DateAndTimePickers(items['start_date'],"Start date :")}</Typography>
+                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Due Date : {DateAndTimePickers(items['due_date'],'Due Date :')}</Typography>
                      <CardActions>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'None'}} to={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards"}>View Assigned Members</Link></Button>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards/id/"+item.id}>Update</Link></Button> 
+                     <Button size="small"><Link sx={{textDecoration:'None'}} to={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards"}>View Assigned Members</Link></Button> 
                      </CardActions>
-                     <Typography variant="body2"><h5>Created By : {item['creator']}</h5></Typography>
+                     <Typography variant="body2"><h5>Created By : {items['creator']}</h5></Typography>
                      </CardContent>
                      </Card><br></br></Box><br></br>
               
             </li>
-          ))}
-          </div>
+       
+          
         </ul></div>
       );
     }
   }
 
-  export default function Cards()
+  export default function Carddetail(props)
 
   {    
     // const search = useLocation().search;
     // const userName = new URLSearchParams(search).get('Token');
     // localStorage.setItem("token",userName)
     //         console.log(localStorage.getItem("token"));
-     console.log("hi");
-       return (MyComponent());
+    //  console.log("hi");
+       return (MyComponent(props.id1,props.id2,props.id3));
   }
