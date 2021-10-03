@@ -6,7 +6,7 @@ import { Box, Button, ButtonBase, Card, CardActions, CardContent, Dialog, Icon, 
 import {  MenuItem } from '@material-ui/core';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
-import Projdetail from '../projdetail';
+import Projdetail from './projdetail';
 function HomeIcon(props) {
     return (
       <SvgIcon {...props}>

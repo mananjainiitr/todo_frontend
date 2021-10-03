@@ -19,6 +19,7 @@ import Cards from './components/Card';
 import Addlist from './components/addlist';
 import Addcard from './components/addcard';
 import Updateproject from './components/updateProj';
+import Updatelist from './components/updatelist';
 // import Addproject from "./pages/ExplorePage";
 
 export default function App() {
@@ -52,12 +53,16 @@ export default function App() {
         <Route path="/todo/project/id/:id/addlist">
           <Addlist />
         </Route>
+        <Route path="/todo/project/id/:id1/list/id/:id2">
+            <Updatelist />
+        </Route>
           <Route path="/todo/project/id/:id/list">
           <List />
         </Route> 
         <Route path="/todo/project/id/:id">
             <Updateproject />
         </Route>
+        
         <Route path="/todo/login">
           <Login />
         </Route>

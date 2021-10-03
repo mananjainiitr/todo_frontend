@@ -14,19 +14,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-const styles = theme => ({
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
-    },
-  });
-  
-  function DateAndTimePickers(datee , typee) {
+function DateAndTimePickers(datee , typee) {
     const { type } = typee
     // console.log("dat"+datee);
 
@@ -45,38 +33,33 @@ const styles = theme => ({
       </form>
     );
   }
-  
-function HomeIcon(props) {
-    return (
-      <SvgIcon {...props}>
-        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-      </SvgIcon>
-    );
-  }
-function MyComponent() {
+function MyComponent(id1,id2) {
     
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
+    
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
     var token = localStorage.getItem("token");
     // const search = useLocation().search;
     // const projid = new URLSearchParams(search).get('project');
-    const { id } = useParams();
-    console.log(id);
     const tokenid = localStorage.getItem("token");
     useEffect(() => {
-      axios.get("http://localhost:8000/todo/viewsets/project/id/"+id+"/list",{
+      axios.get("http://localhost:8000/todo/viewsets/project/id/"+id1+"/list/"+id2,{
         headers: { 'Authorization':tokenid,}
       })
         .then(
           (result) => {
-            console.log(result);
+
+            items = result['data'];
+            setItems(result['data']);
+            console.log(items);
             setIsLoaded(true);
-            setItems(result['data']['results']);
-            items = result['data']['results'];
+            
+            // items = result['data'];
+            
             console.log(items);
             
           },
@@ -107,42 +90,33 @@ function MyComponent() {
         //   ))}
         // </ul>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
-            <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
-              <CardContent sx={{color:"white"}}>LISTS</CardContent>
-          <Button>
-          <Link to={"/todo/project/id/"+id+"/addlist"}>
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon></Link>
-          </Button>
-          <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
-          </Box></Box>
-          <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
-          {items.map(item => (
-            <li key={item.id}>
+    
+          
+         
+            <li key={items.id}>
                 <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
                  <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
                        
-                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{item['listtitle']}</Typography> 
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{item['desc']}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Start Date : {DateAndTimePickers(item['start_date'],"Start date :")}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Due Date : {DateAndTimePickers(item['due_date'],'Due Date :')}</Typography>
+                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{items['listtitle']}</Typography> 
+                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{items['desc']}</Typography>
+                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Start Date : {DateAndTimePickers(items['start_date'],"Start date :")}</Typography>
+                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Due Date : {DateAndTimePickers(items['due_date'],'Due Date :')}</Typography>
                      <CardActions>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'None'}} to={"/todo/project/id/"+id+"/list/id/"+item.id+"/cards"}>View Cards</Link></Button>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id+"/list/id/"+item.id}>Update</Link></Button>
+                     <Button size="small"><Link sx={{textDecoration:'None'}} to={"/todo/project/id/"+id1+"/list/id/"+items.id+"/cards"}>View Cards</Link></Button>
+                     
                      </CardActions>
-                     <Typography variant="body2"><h5>Created By : {item['creator']}</h5></Typography>
+                     <Typography variant="body2"><h5>Created By : {items['creator']}</h5></Typography>
                      </CardContent>
                      </Card><br></br></Box><br></br>
               
             </li>
-          ))}
-          </div>
+          
         </ul></div>
       );
     }
   }
 
-  export default function List(){
+  export default function ListDetail(props){
 
 
 //   {     console.log(props.user);
@@ -155,5 +129,5 @@ function MyComponent() {
     // const userName = new URLSearchParams(search).get('Token');
     // localStorage.setItem("token",userName)
     //         console.log(localStorage.getItem("token"));
-       return (MyComponent());
+       return (MyComponent(props.id1,props.id2));
   }
