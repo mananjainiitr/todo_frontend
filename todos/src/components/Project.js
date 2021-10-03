@@ -13,6 +13,7 @@ import { Avatar , Box , Divider  } from '@mui/material';
 import List from './List';
 import Icon from '@mui/material/Icon';
 import SvgIcon from '@mui/material/SvgIcon';
+import Deleteproject from './deleteproject';
 // import LoadingButton from '@mui/lab/LoadingButton';
 function HomeIcon(props) {
     return (
@@ -85,7 +86,7 @@ function MyComponent() {
                      <CardActions>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
-                     
+                     <Deleteproject id={item.id} />
                      </CardActions>
                      </CardContent>
                      </Card><br></br></Box><br></br>

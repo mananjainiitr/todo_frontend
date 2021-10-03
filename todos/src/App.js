@@ -21,6 +21,7 @@ import Addcard from './components/addcard';
 import Updateproject from './components/updateProj';
 import Updatelist from './components/updatelist';
 import Updatecard from './components/updateCard';
+import Deleteproject from './components/deleteproject';
 // import Addproject from "./pages/ExplorePage";
 
 export default function App() {
@@ -64,6 +65,9 @@ export default function App() {
           <Route path="/todo/project/id/:id/list">
           <List />
         </Route> 
+        <Route path="/todo/project/id/:id/delete">
+            <Deleteproject />
+        </Route>
         <Route path="/todo/project/id/:id">
             <Updateproject />
         </Route>
