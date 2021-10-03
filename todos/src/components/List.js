@@ -14,6 +14,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Deletelist from './deletelist';
 const styles = theme => ({
     container: {
       display: 'flex',
@@ -129,6 +130,7 @@ function MyComponent() {
                      <CardActions>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'None'}} to={"/todo/project/id/"+id+"/list/id/"+item.id+"/cards"}>View Cards</Link></Button>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id+"/list/id/"+item.id}>Update</Link></Button>
+                     <Deletelist id1={id} id2={item.id}/>
                      </CardActions>
                      <Typography variant="body2"><h5>Created By : {item['creator']}</h5></Typography>
                      </CardContent>
