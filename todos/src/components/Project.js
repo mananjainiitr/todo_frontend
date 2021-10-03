@@ -13,6 +13,7 @@ import { Avatar , Box , Divider  } from '@mui/material';
 import List from './List';
 import Icon from '@mui/material/Icon';
 import SvgIcon from '@mui/material/SvgIcon';
+// import LoadingButton from '@mui/lab/LoadingButton';
 function HomeIcon(props) {
     return (
       <SvgIcon {...props}>
@@ -82,7 +83,8 @@ function MyComponent() {
                      <Typography sx={{ mb: 1.5 }} color="text.secondary">{item['wiki']}</Typography>
                      <Typography variant="body2"><h5>Creator : {item['creator']}</h5></Typography>
                      <CardActions>
-                     <Button size="small"><Link sx={{textDecoration:'None'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
+                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
+                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
                      
                      </CardActions>
                      </CardContent>

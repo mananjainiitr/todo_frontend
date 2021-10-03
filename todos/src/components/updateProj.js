@@ -2,10 +2,11 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react';
 
 import TextField from '@material-ui/core/TextField'
-import { Box, Button, ButtonBase, CardContent, Dialog, Icon, Link, Typography } from '@mui/material';
+import { Box, Button, ButtonBase, Card, CardActions, CardContent, Dialog, Icon, Link, Typography } from '@mui/material';
 import {  MenuItem } from '@material-ui/core';
 import SvgIcon from '@mui/material/SvgIcon';
-
+import { useParams } from 'react-router';
+import Projdetail from '../projdetail';
 function HomeIcon(props) {
     return (
       <SvgIcon {...props}>
@@ -17,6 +18,7 @@ function HomeIcon(props) {
 function Myform()
 {   
     var member =[];
+    const { id } = useParams();
     
     function HandleSub(e)
     {
@@ -26,7 +28,7 @@ function Myform()
       var wiki = document.getElementById("wiki").value;
       const tokenid = localStorage.getItem("token");
   
-      axios.post("http://localhost:8000/todo/viewsets/project/",{
+      axios.put("http://localhost:8000/todo/viewsets/project/"+id+"/",{
         "projtitle": project,
         "wiki": wiki,
         "creator": 2,
@@ -86,21 +88,22 @@ function Myform()
       return <div>Loading...</div>;
     } else {
       return(
-        <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
+        <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll",background:'#f2f4f7'}}>
+            
             <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
           <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
           
              <Button sx={{color:"white"}}><Link sx={{textDecoration:"none",color:"white"}} href="/todo/project">PROJECTS</Link></Button>
           <Button onClick >
               <Link to="project/addproject">
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon>
-              </Link>
+              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon></Link>
           </Button>
           <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
           </Box></Box>
           <Typography sx={{color:'#2185d0',textAlign:'center'}} variant="h5" component="div">Add Project</Typography><br></br>
+          <Box><Projdetail id = {id}/></Box>
             <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
-             
+           
             
         <form id = "form" onSubmit = {e => HandleSub(e)}>
             <TextField style={{width:'50vw'}}type = "text"id = "projtitle" name = "projtitle" placeholder = "project title" /><br/>
@@ -114,7 +117,7 @@ function Myform()
     )
 }}
 
-export default function  Addproject() {
+export default function  Updateproject() {
     return(
         Myform()
     )
