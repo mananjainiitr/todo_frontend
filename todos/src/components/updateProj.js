@@ -7,6 +7,7 @@ import {  MenuItem } from '@material-ui/core';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
 import Projdetail from './projdetail';
+import Header from './Header';
 function HomeIcon(props) {
     return (
       <SvgIcon {...props}>
@@ -88,6 +89,8 @@ function Myform()
       return <div>Loading...</div>;
     } else {
       return(
+        <>
+          <Header token={tokenid}/>
         <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll",background:'#f2f4f7'}}>
             
             <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
@@ -113,7 +116,7 @@ function Myform()
                 <Typography sx={{color:'#2185d0'}} variant="h7" component="div">{item["email"]+" : "}<input id = {item["id"]} type = "checkbox" value = {item["id"]} onChange = {(e) => handleMember(e)}></input></Typography><br/></li>
             ))}
             <Button type="submit" variant="contained" color="primary">Add</Button>
-        </form></Box> </div>
+        </form></Box> </div></>
     )
 }}
 

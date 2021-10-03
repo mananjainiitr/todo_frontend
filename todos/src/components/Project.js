@@ -14,6 +14,7 @@ import List from './List';
 import Icon from '@mui/material/Icon';
 import SvgIcon from '@mui/material/SvgIcon';
 import Deleteproject from './deleteproject';
+import Header from './Header';
 // import LoadingButton from '@mui/lab/LoadingButton';
 function HomeIcon(props) {
     return (
@@ -63,7 +64,8 @@ function MyComponent() {
       return (
         //   <p>{items[1]['projtitle']}</p>
         //   <p>hi</p>
-        
+        <>
+        <Header token={tokenid}/>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
             <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
           <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
@@ -94,7 +96,7 @@ function MyComponent() {
             </li>
           ))}
           </div>
-        </ul></div>
+        </ul></div></>
       );
     }
   }

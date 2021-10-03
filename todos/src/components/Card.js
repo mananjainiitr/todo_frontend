@@ -14,6 +14,8 @@ import SvgIcon from '@mui/material/SvgIcon';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Deletecard from './deletecard';
+import Header from './Header';
 const styles = theme => ({
     container: {
       display: 'flex',
@@ -94,6 +96,8 @@ function MyComponent() {
       return <div>Loading...</div>;
     } else {
       return (
+        <>
+        <Header token={tokenid}/>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
             <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
           <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
@@ -117,6 +121,7 @@ function MyComponent() {
                      <CardActions>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'None'}} to={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards"}>View Assigned Members</Link></Button>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards/id/"+item.id}>Update</Link></Button> 
+                     <Deletecard id1={id1} id2={id2} id3={item.id}/>
                      </CardActions>
                      <Typography variant="body2"><h5>Created By : {item['creator']}</h5></Typography>
                      </CardContent>
@@ -125,7 +130,7 @@ function MyComponent() {
             </li>
           ))}
           </div>
-        </ul></div>
+        </ul></div></>
       );
     }
   }

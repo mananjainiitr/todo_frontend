@@ -6,6 +6,7 @@ import { Box, Button, ButtonBase, CardContent, Dialog, Icon, Link, Typography } 
 import {  MenuItem } from '@material-ui/core';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
+import Header from './Header';
 function HomeIcon(props) {
     return (
       <SvgIcon {...props}>
@@ -15,7 +16,8 @@ function HomeIcon(props) {
   }
 
 function Myform()
-{   
+
+ {  const tokenid = localStorage.getItem("token");   
     const { id } = useParams();
     
     function HandleSub(e)
@@ -49,6 +51,8 @@ function Myform()
     })}
 
       return(
+        <>
+        <Header token={tokenid}/>
         <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
             <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
           <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
@@ -70,7 +74,7 @@ function Myform()
             
             <TextField id="due_date"type = "datetime-local"/><br/>
             <Button type="submit" variant="contained" color="primary">Add</Button>
-        </form></Box> </div>
+        </form></Box> </div></>
     )
 }
 

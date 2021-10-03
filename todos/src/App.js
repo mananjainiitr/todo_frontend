@@ -22,11 +22,12 @@ import Updateproject from './components/updateProj';
 import Updatelist from './components/updatelist';
 import Updatecard from './components/updateCard';
 import Deleteproject from './components/deleteproject';
+import Dashboard from './components/Dashboard';
 // import Addproject from "./pages/ExplorePage";
 
 export default function App() {
   return (<Router>
-      <Header />
+      {/* <Header /> */}
       <div>
         {/* <nav>
           <ul>
@@ -80,6 +81,9 @@ export default function App() {
         </Route>
         <Route path="/todo/project">
           <Project />
+        </Route>
+        <Route path="/todo/dashboard">
+          <Dashboard/>
         </Route>
         {/* <Route path="/todo/users">
           <Button />
