@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import axios from "axios";
-import { useParams } from "react-router";
+
 function Myfunc(id)
 {
     const tokenid = localStorage.getItem("token");

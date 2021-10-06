@@ -13,6 +13,7 @@ import Login from './components/Login';
 import Project from './components/Project';
 import List from './components/List';
 import Card from './components/Card';
+import Auth from './components/auth';
 import  Addproject  from './components/addproject';
 import  Header  from './components/Header';
 import Cards from './components/Card';
@@ -23,6 +24,8 @@ import Updatelist from './components/updatelist';
 import Updatecard from './components/updateCard';
 import Deleteproject from './components/deleteproject';
 import Dashboard from './components/Dashboard';
+import Admin from './components/Admin';
+
 // import Addproject from "./pages/ExplorePage";
 
 export default function App() {
@@ -82,8 +85,14 @@ export default function App() {
         <Route path="/todo/project">
           <Project />
         </Route>
-        <Route path="/todo/dashboard">
+        <Route path="/todo/dashboard/:detail">
           <Dashboard/>
+        </Route>
+        <Route path="/todo/user/info">
+          <Admin/>
+        </Route>
+        <Route path="/todo/auth">
+          <Auth />
         </Route>
         {/* <Route path="/todo/users">
           <Button />

@@ -1,9 +1,9 @@
 import axios from 'axios'
-import ReactDOM from 'react-dom';
+
 import React, { useState, useEffect } from 'react';
-import {useLocation} from "react-router-dom";
-import { Avatar , Box , Divider  } from '@mui/material';
-import { Link, Redirect, useParams } from 'react-router-dom';
+
+import {  Box  } from '@mui/material';
+import { Link,  useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
@@ -11,8 +11,7 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Icon from '@mui/material/Icon';
 import SvgIcon from '@mui/material/SvgIcon';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+
 import TextField from '@material-ui/core/TextField';
 import Deletecard from './deletecard';
 import Header from './Header';
@@ -50,9 +49,10 @@ const styles = theme => ({
   
 function HomeIcon(props) {
     return (
+      <Link to="/todo/project">
       <SvgIcon {...props}>
         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-      </SvgIcon>
+      </SvgIcon></Link>
     );
   }
 function MyComponent() {

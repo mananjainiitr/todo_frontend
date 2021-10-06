@@ -1,13 +1,12 @@
-import react, { useState , useEffect} from 'react';
-import { Button, CardActions, CardContent, Container, Icon, SvgIcon, TextField, Typography } from '@mui/material';
-import { AppBar, Card, Toolbar } from "@material-ui/core";
+import { useState , useEffect} from 'react';
+import { Button, CardActions, CardContent, Typography } from '@mui/material';
+import { Card} from "@material-ui/core";
 // import Avatar from '@mui/material/Avatar';
-import { Avatar , Box , Divider  } from '@mui/material';
-import { flexbox } from '@mui/system';
-import { useParams } from 'react-router';
+import { Box  } from '@mui/material';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Header from './Header';
+
 import Deleteproject from './deleteproject';
 
 

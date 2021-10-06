@@ -1,9 +1,8 @@
 import axios from 'axios'
-import ReactDOM from 'react-dom';
 import React, { useState, useEffect } from 'react';
-import {useLocation} from "react-router-dom";
-import { Avatar , Box , Divider  } from '@mui/material';
-import { Link, Redirect, useParams } from 'react-router-dom';
+
+import {  Box  } from '@mui/material';
+import { Link,  useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
@@ -11,11 +10,24 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Icon from '@mui/material/Icon';
 import SvgIcon from '@mui/material/SvgIcon';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+
 import TextField from '@material-ui/core/TextField';
 import Deletelist from './deletelist';
 import Header from './Header';
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import MUIRichTextEditor from 'mui-rte'
+
+const MyBlock = (props) => {
+    return (
+        <div style={{
+            padding: 10,
+            backgroundColor: "#ebebeb"
+        }}>
+            My Block content is:
+            {props.children}
+        </div>
+    )
+}
 const styles = theme => ({
     container: {
       display: 'flex',
@@ -50,9 +62,10 @@ const styles = theme => ({
   
 function HomeIcon(props) {
     return (
-      <SvgIcon {...props}>
-        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-      </SvgIcon>
+        <Link to="/todo/project">
+        <SvgIcon {...props}>
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </SvgIcon></Link>
     );
   }
 function MyComponent() {
@@ -126,7 +139,7 @@ function MyComponent() {
                 <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
                  <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
                        
-                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{item['listtitle']}</Typography> 
+                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{item['listtitle']}</Typography>                      
                      <Typography sx={{ mb: 1.5 }} color="text.secondary">{item['desc']}</Typography>
                      <Typography sx={{ mb: 1.5 }} color="text.secondary">Start Date : {DateAndTimePickers(item['start_date'],"Start date :")}</Typography>
                      <Typography sx={{ mb: 1.5 }} color="text.secondary">Due Date : {DateAndTimePickers(item['due_date'],'Due Date :')}</Typography>

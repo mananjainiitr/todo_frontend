@@ -1,7 +1,6 @@
 import axios from 'axios'
-import ReactDOM from 'react-dom';
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect, useParams } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import {useLocation} from "react-router-dom";
 // import { CardContent} from '@mui/material';
 import Card from '@mui/material/Card';
@@ -9,8 +8,8 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import { Avatar , Box , Divider  } from '@mui/material';
-import List from './List';
+import { Box  } from '@mui/material';
+
 import Icon from '@mui/material/Icon';
 import SvgIcon from '@mui/material/SvgIcon';
 import Deleteproject from './deleteproject';
@@ -18,9 +17,10 @@ import Header from './Header';
 // import LoadingButton from '@mui/lab/LoadingButton';
 function HomeIcon(props) {
     return (
-      <SvgIcon {...props}>
-        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-      </SvgIcon>
+        <Link to="/todo/project">
+        <SvgIcon {...props}>
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </SvgIcon></Link>
     );
   }
 
@@ -113,224 +113,3 @@ function MyComponent() {
             console.log(localStorage.getItem("token"));
        return (MyComponent());
   }
-// function main(){
-//     var list = [];
-// //     var projList = [];
-// //     var item ;
-// // var isPaused = true;
-
-//  axios.get(`http://localhost:8000/todo/viewsets/project`, {
-//     headers: {
-//         'Authorization':'Token 38ee222727bb2bf75f9091c5b395532345a784b3',
-//     }}).then(function (response) {
-//         console.log(response);
-        
-//     const x = response['data']['count'];
-    
-//     for (let i = 0 ; i < x ; i ++)
-//     {
-//         list[i] = response['data']['results'][i]['projtitle'];
-        
-//     }
-//     // isPaused = false;
-// })
-// return("hi");
-// }
-// export default function Project()
-
-// {   return (main());
-// }
-
-// export default function Project () {
-//     const url = 'http://localhost:8000/todo/viewsets/project';
-//     const [user,setuser] = useState(null);
-//     const [loading , setloading] = useState(true)
-//     useEffect(() => {
-//         axios.get(`http://localhost:8000/todo/viewsets/project`, {
-//         headers: {
-//             'Authorization':'Token 38ee222727bb2bf75f9091c5b395532345a784b3',
-//         }
-//       }).then(function (response) {
-//           const x = response['data']['count'];
-//           const list = [];
-//           for (let i = 0 ; i < x ; i ++)
-//           {
-//               list[i] = response['data']['results'][i]['projtitle'];
-              
-//           }
-    
-//         projList = list;
-//         // console.log("hey"+projList);
-//         const listItems = projList.map((d) => <li className="li">{d.name}</li>);
-//         item = listItems
-//         // console.log(item)
-//         return (
-//             <div>
-//             { item }
-//             </div>
-//           );
-//       });
-//       return item;
-
-// })
-// };
-    
-
- 
-        
-
-
-
-
-// function getproj()
-// {
-    
-//     axios.get(`http://localhost:8000/todo/viewsets/project`, {
-//     headers: {
-//         'Authorization':'Token 38ee222727bb2bf75f9091c5b395532345a784b3',
-//     }
-//   }).then(function (response) {
-//       const x = response['data']['count'];
-//       const list = [];
-//       for (let i = 0 ; i < x ; i ++)
-//       {
-//           list[i] = response['data']['results'][i]['projtitle'];
-//       }
-
-//      projList = list;
-//     console.log(projList);
-    
-
-//   });
-//   return projList;
-  
-// }
-// async function main(){
-//     var item ;
-//     var projList = [];
-
-//     const list = await axios.get(`http://localhost:8000/todo/viewsets/project`, {
-//         headers: {
-//             'Authorization':'Token 38ee222727bb2bf75f9091c5b395532345a784b3',
-//         }
-//       }).then(function (response) {
-//           const x = response['data']['count'];
-//           const list = [];
-//           for (let i = 0 ; i < x ; i ++)
-//           {
-//               list[i] = response['data']['results'][i]['projtitle'];
-              
-//           }
-    
-//         projList = list;
-//         // console.log("hey"+projList);
-//         const listItems = projList.map((d) => <li className="li">{d.name}</li>);
-//         item = listItems
-//         // console.log(item)
-//         return (
-//             <div>
-//             { item }
-//             </div>
-//           );
-//       });
-//       return item;
-
-// }
-
-    
-
- 
-
-// export default function Login() {
-    
-//     const val =  main().finally();
-//     console.log(val)
-
-//     return ("hii");
-   
-
-    // axios.get(`http://localhost:8000/todo/viewsets/project`, {
-    //     headers: {
-    //         'Authorization':'Token 38ee222727bb2bf75f9091c5b395532345a784b3',
-    //     }
-    //   }).then(function (response) {
-    //       const x = response['data']['count'];
-    //       const list = [];
-    //       for (let i = 0 ; i < x ; i ++)
-    //       {
-    //           list[i] = response['data']['results'][i]['projtitle'];
-              
-    //       }
-    
-    //     projList = list;
-    //     console.log("hey"+projList);
-    //     const listItems = projList.map((d) => <li className="li">{d.name}</li>);
-    //     item = listItems
-    //     console.log(item)
-    //     return (
-    //         <div>
-    //         { item }
-    //         </div>
-    //       );
-    //   });
- 
-    // const [isLoading, setLoading] = useState(true);
-    // console.log("bybh")
-    // function makeGetRequest(path) {
-    //     return new Promise(function (resolve, reject) {
-    //          axios.get(path,{headers : {
-    //     'Authorization':'Token 38ee222727bb2bf75f9091c5b395532345a784b3',
-    // }}).then(
-    //             (response) => {
-    //                 const x = response['data']['count'];
-    //               const list = [];
-    //               for (let i = 0 ; i < x ; i ++)
-    //               {
-    //                   list[i] = response['data']['results'][i]['projtitle'];
-    //               }
-    //               projList = list;
-    //               resolve(list);
-    //             },
-    //                 (error) => {
-    //                 reject(error);
-    //             }
-    //         );
-    //     });
-    // }
-      
-    // async function main() {
-    //     var result = await makeGetRequest('http://localhost:8000/todo/viewsets/project');
-    //     console.log(result.result);
-    //     console.log('Statement 2');
-    // }
-    // main();
-
-// function makeGetRequest(path) {
-//     axios.get(path,{headers : {
-//         'Authorization':'Token 38ee222727bb2bf75f9091c5b395532345a784b3',
-//     }}).then(
-//         (response) => {
-//             const x = response['data']['count'];
-//           const list = [];
-//           for (let i = 0 ; i < x ; i ++)
-//           {
-//               list[i] = response['data']['results'][i]['projtitle'];
-//           }
-//           projList = list;
-//         },
-//         (error) => {
-//             console.log(error);
-//         }
-//     );
-// }
-// function main() {
-//     var response = makeGetRequest('http://localhost:8000/todo/viewsets/project');
-//     console.log(response);
-// }
-// main();
-    
-
-    // const list = getproj();
-    // console.log(list);
-    // // const urlParams = new URLSearchParams(queryString);
-    

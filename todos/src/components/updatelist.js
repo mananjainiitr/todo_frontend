@@ -1,18 +1,19 @@
 import axios from 'axios'
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import TextField from '@material-ui/core/TextField'
-import { Box, Button, ButtonBase, CardContent, Dialog, Icon, Link, Typography } from '@mui/material';
-import {  MenuItem } from '@material-ui/core';
+import { Box, Button,  Icon, Link, Typography } from '@mui/material';
+
 import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
 import ListDetail from './listdetail';
 import Header from './Header';
 function HomeIcon(props) {
     return (
-      <SvgIcon {...props}>
-        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-      </SvgIcon>
+      <Link to="/todo/project">
+        <SvgIcon {...props}>
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </SvgIcon></Link>
     );
   }
 
