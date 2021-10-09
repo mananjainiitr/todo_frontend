@@ -7,6 +7,7 @@ import { Box, Button, Icon, Link, Typography } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
 import Header from './Header';
+import Member from './member';
 function HomeIcon(props) {
     return (
       <Link to="/todo/project">
@@ -18,6 +19,7 @@ function HomeIcon(props) {
 
 function Myform()
 {   
+    var mem = [];
     var member =[];
     const {id1} = useParams();
     const {id2} = useParams();
@@ -29,7 +31,10 @@ function Myform()
       var desc = document.getElementById("desc").value;
       var due_date= document.getElementById("due_date").value;
       var is_completed = false;
-      
+      var people = []
+      var mem = document.getElementById("one").value;
+      people = mem.split(",")
+      console.log(people);
       const tokenid = localStorage.getItem("token");
   
       axios.post("http://localhost:8000/todo/viewsets/project/id/"+id1+"/list/id/"+id2+"/card/",{
@@ -37,7 +42,7 @@ function Myform()
         "desc": desc,
         "due_date":due_date,
         "is_completed":is_completed,
-        "member_pk2": member},{
+        "member_pk2": people},{
         headers: { 'Authorization':tokenid,}}
         
       ).then(function (response) {
@@ -92,6 +97,11 @@ function Myform()
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+        items.map(item => (
+                
+            mem.push({"title":item["email"],"year":item["id"]})
+            
+        ))
       return(
     
         <div style={{width:"35vw",padding:"2vw"}} >
@@ -101,10 +111,7 @@ function Myform()
             <TextField style={{width:'35vw'}} type = "text"id = "desc" name = "desc" placeholder = "desc" /><br/>
             <TextField style={{width:'35vw'}} type = "datetime-local" id = "due_date" name = "desc" placeholder = "due_date" /><br/>
             
-            {items.map(item => (
-                <li>
-                <Typography sx={{color:'#2185d0'}} variant="h7" component="div">{item["email"]+" : "}<input id = {item["id"]} type = "checkbox" value = {item["id"]} onChange = {(e) => handleMember(e)}></input></Typography><br/></li>
-            ))}
+            <Member mem = {mem}/>
             <Button type="submit" variant="contained" color="primary">Add</Button>
         </form></div>
     )

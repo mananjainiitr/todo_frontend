@@ -12,6 +12,11 @@ import SvgIcon from '@mui/material/SvgIcon';
 
 import TextField from '@material-ui/core/TextField';
 import Deletecard from './deletecard';
+import Header from './Header';
+import { Avatar, Grid } from '@material-ui/core';
+import AddCardComp from './addCardComp';
+import ListData from './listData';
+import UserProfile from './userprofile';
 const styles = theme => ({
     container: {
       display: 'flex',
@@ -51,7 +56,7 @@ function HomeIcon(props) {
       </SvgIcon>
     );
   }
-function MyComponent() {
+function MyComponent(name , email , year , is_admin) {
     
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -93,35 +98,56 @@ function MyComponent() {
     } else {
       return (
         <>
-        
-          <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
+        <Header token={tokenid}/>
+        <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
+        <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
+              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>DASHBOARD</h3></CardContent>
+          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
+          <h3>Card&nbsp;</h3>
+          </Box>
+          {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
+          </Box></Box>
+        <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
+        <Grid container spacing={2} style={{justifyContent:"space-between"}}>
+        <UserProfile name={name} email={email} year={year} is_admin={is_admin} />
+        <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
+          
+         
           {items.map(item => (
-            <li key={item.id}>
-                <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
-                 <Card style={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
-                       
-                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{item['cardtitle']}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{item['desc']}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Start Date : {DateAndTimePickers(item['start_date'],"Start date :")}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Due Date : {DateAndTimePickers(item['due_date'],'Due Date :')}</Typography>
-                     <CardActions>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'None'}} to={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards"}>View Assigned Members</Link></Button>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards/id/"+item.id}>Update</Link></Button> 
-                     <Deletecard id1={id1} id2={id2} id3={item.id}/>
-                     </CardActions>
-                     <Typography variant="body2"><h5>Created By : {item['creator']}</h5></Typography>
-                     </CardContent>
-                     </Card><br></br></Box><br></br>
+          <li style={{minwidth:"50vw",margin:"0px"}} key={item.id}>
+              <Box style={{ minwidth:'50vw',display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
               
-            </li>
-          ))}
-          </div>
-        </>
+               <Card style={{minWidth:"50vw",maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
+               <Grid container spacing={2}>
+               <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} variant="rounded">
+                   {((item['cardtitle']).slice(0,1)).toUpperCase()}
+                   </Avatar>
+                   <Typography style={{padding:"20px",color:"black"}} sx={{color:'#2185d0'}} variant="h5" component="div">{item['cardtitle']}
+                   <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Desc : {item['desc']}</Typography>
+                   <Typography style={{fontSize:"11px",color:"#2185d0"}}>By : {item['creator']['name']}<Typography type="date" >{item['due_date'].slice(0,10)}</Typography></Typography>
+                   <br></br>
+                   </Typography> </Grid>
+                  
+            
+                   {/* <CardActions>
+                   <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
+                   <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
+                   <Deleteproject id={item.id} />
+                   </CardActions> */}
+                   </CardContent>
+
+                   </Card></Box>
+            
+          </li>
+        ))}</div></Grid>
+        </div>
+      </ul></div></>
       );
     }
   }
 
-  export default function DashCards()
+  export default function DashCards(props)
 
   {    
     // const search = useLocation().search;
@@ -129,5 +155,5 @@ function MyComponent() {
     // localStorage.setItem("token",userName)
     //         console.log(localStorage.getItem("token"));
     //  console.log("hi");
-       return (MyComponent());
+       return (MyComponent(props.name,props.email,props.year,props.is_admin));
   }

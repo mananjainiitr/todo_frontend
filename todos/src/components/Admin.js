@@ -1,4 +1,4 @@
-import { Card } from "@material-ui/core";
+import { Card, Grid } from "@material-ui/core";
 import { Box, Button, CardContent, Checkbox, FormControlLabel, Icon, SvgIcon, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -72,20 +72,20 @@ function MyComponent()
         <>
         <Header token={tokenid}/>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
-            <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
-              <CardContent sx={{color:"white"}}>PROJECTS</CardContent>
-          <Button onClick >
-              <Link to="/todo/project/addproject">
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon></Link>
-          </Button>
-          <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
+            <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
+              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>ADMIN DASHBOARD</h3></CardContent>
+          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
+              <h3>Users&nbsp;</h3>
+          </Box>
+          {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
           </Box></Box>
-        <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
+        <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll",textAlign:"center"}}>
+        <Grid style={{justifyContent:"center"}} container spacing={3}>
         {items.map(item => (
-        <li style={{minWidth:"50vw"}} key={item.id}>
-        <Box style={{ width:'100vw',display:"flex",justifyContent:'center',margin:'10px'}}>
-         <Card style={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent>
+        <li style={{minWidth:"25vw"}} key={item.id}>
+        <Box style={{ minwidth:'25vw',display:"flex",justifyContent:'center',margin:'10px'}}>
+         <Card style={{minWidth:"25vw",maxWidth:"800px",margin:'0px'}}><CardContent>
         <form value = {item["id"]} onSubmit = {(e) => handleSubmit(e,item["id"])}>
         <Typography sx={{ mb: 1.5 }} color="black">Email : {item['email']}</Typography>
         <Typography sx={{ mb: 1.5 }} color="black">Year : {item['year']}</Typography>
@@ -93,7 +93,7 @@ function MyComponent()
         <Typography id = "admin" sx={{ mb: 1.5 }} color="black">Is Admin : <Checkbox defaultChecked={item['admin']} onChange = {(e) => handleAdmin(e)}></Checkbox></Typography>
         <Typography id = "staff" sx={{ mb: 1.5 }} color="black">Is Staff : <Checkbox defaultChecked={item['staff']} onChange = {(e) => handleStaff(e)}></Checkbox></Typography>
         <Button variant="contained" color="primary" type = "submit">Update</Button>
-        </form></CardContent></Card></Box></li>) )}
+        </form></CardContent></Card></Box></li>) )}</Grid>
         </div></ul></div></>
         );
 }

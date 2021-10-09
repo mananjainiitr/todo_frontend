@@ -169,17 +169,24 @@ export default function Member(props) {
     setAnchorEl,
   } = useAutocomplete({
     id: 'customized-hook-demo',
-    defaultValue: [top100Films[1]],
     multiple: true,
-    options: top100Films,
+    options: props.mem,
     getOptionLabel: (option) => option.title,
   });
 //    top100Films = props.mem
+var button = []
+
+if(props.mem.length!=0){
+    console.log(props.mem)
+    value.map((option, index) => (button.push(option.year)))
+    console.log(button)
   return (
     <Root>
-      <div {...getRootProps()}>
-        <Label {...getInputLabelProps()}>Customized hook</Label>
-        <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
+      
+      <div  {...getRootProps()}>
+          <input type="hidden" id = "one" value = {button}/>
+        <Label {...getInputLabelProps()}>Members</Label>
+        <InputWrapper value={button} ref={setAnchorEl} className={focused ? 'focused' : ''}>
           {value.map((option, index) => (
             <StyledTag label={option.title} {...getTagProps({ index })} />
           ))}
@@ -198,8 +205,11 @@ export default function Member(props) {
         </Listbox>
       ) : null}
     </Root>
-  );
-}
+  );}
+
+else{
+    return("loading");
+}}
 // var top100Films = []
 
 

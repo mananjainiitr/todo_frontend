@@ -1,6 +1,6 @@
 import { useState , useEffect} from 'react';
 import { Button, CardActions, CardContent, Typography } from '@mui/material';
-import { Card} from "@material-ui/core";
+import { Avatar, Card, Grid} from "@material-ui/core";
 // import Avatar from '@mui/material/Avatar';
 import { Box  } from '@mui/material';
 
@@ -8,10 +8,13 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import Deleteproject from './deleteproject';
+import Header from './Header';
+import AddprojectComp from './addProjComponent';
+import UserProfile from './userprofile';
 
 
 
-function ProjectComp() {
+function ProjectComp(name , email , year , is_admin) {
     
     
     const [error, setError] = useState(null);
@@ -50,33 +53,51 @@ function ProjectComp() {
       return <div>Loading...</div>;
     } else {
       return (<>
+        <Header token={tokenid}/>
+        <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
+            <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
+              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>DASHBOARD</h3></CardContent>
+          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
+              <h3>Project&nbsp;</h3>
+          </Box>
+          {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
+          </Box></Box>
+          <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
+          <Grid container spacing={2} style={{justifyContent:"space-between"}}>
+          <UserProfile name={name} email={email} year={year} is_admin={is_admin} />
+
+          <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
         
-          <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
-          {items.map(item => (
-            <li key={item.id}>
-                <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
-                 <Card style={{width:'50vw',minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
-                       
-                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{item['projtitle']}</Typography> 
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{item['wiki']}</Typography>
-                     <Typography variant="body2"><h5>Creator : {item['creator']}</h5></Typography>
-                     <CardActions>
+            {items.map(item => (
+            <li style={{minwidth:"50vw"}} key={item.id}>
+                <Box style={{ minwidth:'50vw',display:"flex",justifyContent:'right',margin:'0px'}}>
+                <Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>
+                 <Card style={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
+                 <Grid container spacing={2}>
+                     <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} variant="rounded">
+                     {((item['projtitle']).slice(0,1)).toUpperCase()}
+                     </Avatar>  
+                     <Typography style={{padding:"20px"}} sx={{color:'#2185d0'}} variant="h4" component="div">{item['projtitle']}
+                     <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Wiki : {item['wiki']}</Typography>
+                     <Typography style={{fontSize:"11px"}}>Creator : {item['creator']['name']}</Typography></Typography> </Grid>
+                     {/* <CardActions>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
                      <Deleteproject id={item.id} />
-                     </CardActions>
+                     </CardActions> */}
                      </CardContent>
-                     </Card><br></br></Box><br></br>
+                     </Card></Link><br></br></Box><br></br>
               
             </li>
-          ))}
+          ))}</div></Grid>
           </div>
-        </>
+        </ul></div></>
       );
     }
   }
-  export default function ProjectDash() {
+  export default function ProjectDash(props) {
     return(
-      ProjectComp()
+      ProjectComp(props.name,props.email,props.year,props.is_admin)
     );
   }

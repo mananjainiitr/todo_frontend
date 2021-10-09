@@ -6,6 +6,7 @@ import { Box, Button,  Icon, Link, Typography } from '@mui/material';
 
 import SvgIcon from '@mui/material/SvgIcon';
 import Header from './Header';
+import Member from './member';
 
 function HomeIcon(props) {
     return (
@@ -18,6 +19,7 @@ function HomeIcon(props) {
 
 function Myform()
 {   
+    var mem=[];
     var member =[];
     function HandleSub(e)
     {
@@ -26,11 +28,15 @@ function Myform()
       var project = document.getElementById("projtitle").value;
       var wiki = document.getElementById("wiki").value;
       const tokenid = localStorage.getItem("token");
+      var people = []
+      var mem = document.getElementById("one").value;
+      people = mem.split(",")
+      console.log(people);
   
       axios.post("http://localhost:8000/todo/viewsets/project/",{
         "projtitle": project,
         "wiki": wiki,
-        "member_pk2": member},{
+        "member_pk2": people},{
         headers: { 'Authorization':tokenid,}}
         
       ).then(function (response) {
@@ -85,6 +91,11 @@ function Myform()
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+        items.map(item => (
+                
+            mem.push({"title":item["email"],"year":item["id"]})
+            
+        ))
       return(
           
           <div style={{width:"35vw",padding:"2vw"}} >
@@ -92,10 +103,7 @@ function Myform()
         <form id = "form" onSubmit = {e => HandleSub(e)}>
         <TextField style={{width:'30vw'}}type = "text"id = "projtitle" name = "projtitle" placeholder = "project title" /><br/>
         <TextField style={{width:'30vw'}} type = "text"id = "wiki" name = "wiki" placeholder = "wiki" />
-        {items.map(item => (
-            <li>
-            <Typography sx={{color:'#2185d0'}} variant="h7" component="div">{item["email"]+" : "}<input id = {item["id"]} type = "checkbox" value = {item["id"]} onChange = {(e) => handleMember(e)}></input></Typography><br/></li>
-        ))}
+        <Member mem = {mem}/>
         <Button type="submit" variant="contained" color="primary">Add</Button>
     </form></div>
     );

@@ -30,6 +30,17 @@ function DateAndTimePickers(datee , typee) {
       </form>
     );
   }
+
+function myfunc(is_completed)
+{
+    if(is_completed)
+    {
+        return (<Typography style={{fontSize:"11px",color:"black"}}>Completed</Typography>)
+    }
+    else{
+        return (<Typography style={{fontSize:"11px",color:"black"}}>Not Completed</Typography>)
+    }
+}
 function MyComponent(id1,id2) {
     
     const [error, setError] = useState(null);
@@ -98,7 +109,9 @@ function MyComponent(id1,id2) {
                     <AssignmentIcon /></Avatar>
                      <Typography style={{padding:"20px",color:"black"}} sx={{color:'#2185d0'}} variant="h5" component="div">{item['listtitle']}
                      <Typography style={{color:"rgba(0, 0, 0, 0.6)"}}>Desc: {item['desc']}</Typography>
-                     <Typography style={{fontSize:"11px",color:"#2185d0"}}>By : {item['creator']['name']}<Typography type="date" >{item['due_date'].slice(0,10)}</Typography></Typography></Typography> </Grid>
+                     <Typography style={{fontSize:"11px",color:"#2185d0"}}>By : {item['creator']['name']}<Typography type="date" >{item['due_date'].slice(0,10)}</Typography>
+                     {myfunc(item["is_completed"])}
+                     </Typography></Typography> </Grid>
                      {/* <CardActions>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
@@ -106,6 +119,7 @@ function MyComponent(id1,id2) {
                      </CardActions> */}
                      <br></br>
                      <br></br>
+                     
                      <Grid container spacing={2}>
                      <Button variant="contained" style={{backgroundColor:"#ACD1AF"}}size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id1+"/list/id/"+id2}>Update</Link></Button>
                      <Deletelist id1={id1} id2={id2}/></Grid>

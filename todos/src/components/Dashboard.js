@@ -77,67 +77,12 @@ function HomeIcon(props) {
         } else {
             if(detail == "card")
             {
-          return (
-              <>
-            <Header token={tokenid}/>
-            <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
-            <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
-              <Link style={{ textDecoration:"none" }} to="/todo/dashboard/project">
-              <CardContent sx={{color:"white"}}>PROJECTS</CardContent>
-              </Link>
-          
-              <Link style={{ textDecoration:"none" }} to="/todo/dashboard/card">
-              <CardContent sx={{color:"white"}}>Cards</CardContent></Link>
-          
-          <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
-          </Box></Box>
-          <Box sx={{width:'100vw',display:'flex',justifyContent:'center'}}>
-              <Box sx={{width:'50vw',display:'flex',justifyContent:'space-between'}}>
-          <CardContent  type="text">Name : {item_data[0]["name"]}</CardContent>
-          <CardContent type="text">Email : {item_data[0]["email"]}</CardContent>
-          <CardContent type="text">Year : {item_data[0]["year"]}</CardContent></Box>
-          
-          </Box>
-          
-          <DashCards/>
-          </ul></div>
-          
-          </>
-          );}
+          return (<DashCards name={item_data[0]['name']} email={item_data[0]['email']} year={item_data[0]['year']} is_admin={item_data[0]['admin']}/>);
+        }
           else{
-              return(
-                <>
-                <Header token={tokenid}/>
-                <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
-                <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
-              <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
-                  <Link style={{ textDecoration:"none" }} to="/todo/dashboard/project">
-                  <CardContent sx={{color:"white"}}>PROJECTS</CardContent>
-                  </Link>
-              
-                  <Link style={{ textDecoration:"none" }} to="/todo/dashboard/card">
-                  <CardContent sx={{color:"white"}}>Cards</CardContent></Link>
-              
-              <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
-              </Box></Box>
-              <Box sx={{width:'100vw',display:'flex',justifyContent:'center'}}>
-                  <Box sx={{width:'50vw',display:'flex',justifyContent:'space-between'}}>            
-              <CardContent  type="text"><Button>Name : {item_data[0]["name"]}</Button></CardContent>
-              <CardContent type="text"><Button>Email : {item_data[0]["email"]}</Button></CardContent>
-              <CardContent>{admin(item_data[0]["admin"],item_data[0]["year"])}</CardContent>
-              {/* <CardContent type="text">Year : {item_data[0]["year"]}</CardContent> */}
-              </Box>
-              
-              </Box>
-              
-              <ProjectDash/>
-              </ul></div>
-              
-              </>
-
-              );
-          }
+              console.log(item_data[0]['name']);
+              return(<ProjectDash name={item_data[0]['name']} email={item_data[0]['email']} year={item_data[0]['year']} is_admin={item_data[0]['admin']} />);
+        }
         }
     }
 function admin(is_admin , year)

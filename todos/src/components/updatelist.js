@@ -8,7 +8,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
 import ListDetail from './listdetail';
 import Header from './Header';
-import { CardContent } from '@material-ui/core';
+import { CardContent, Switch } from '@material-ui/core';
 function HomeIcon(props) {
     return (
       <Link to="/todo/project">
@@ -32,7 +32,7 @@ function Myform()
       var desc = document.getElementById("desc").value;
     //   var start_date = document.getElementById("start_date").value;
       var due_date = document.getElementById("due_date").value;
-      var is_completed = "false";
+      var is_completed = document.getElementById("check").checked;
       console.log(list);
 
       
@@ -74,7 +74,9 @@ function Myform()
             <TextField style={{width:'50vw'}}type = "text"id = "listtitle" name = "listtitle" placeholder = "list title" /><br/>
             <TextField style={{width:'50vw'}} type = "text"id = "desc" name = "desc" placeholder = "list desc." /><br/>
             
-            <TextField id="due_date"type = "datetime-local"/><br/>
+            <TextField id="due_date"type = "datetime-local"/><br/> 
+            <Typography > Is Completed : 
+            <Switch id = "check"{..."is completed"} /></Typography><br></br>
             <Button type="submit" variant="contained" color="primary">Add</Button>
         </form></Box> </div></ul></div></>
     )

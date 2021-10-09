@@ -29,12 +29,16 @@ function Myform()
       var project = document.getElementById("projtitle").value;
       var wiki = document.getElementById("wiki").value;
       const tokenid = localStorage.getItem("token");
+      var people = []
+      var mem = document.getElementById("one").value;
+      people = mem.split(",")
+      console.log(people);
   
       axios.post("http://localhost:8000/todo/viewsets/project/",{
         "projtitle": project,
         "wiki": wiki,
-        "creator": 2,
-        "member": member},{
+        
+        "member_pk2": people},{
         headers: { 'Authorization':tokenid,}}
         
       ).then(function (response) {
@@ -89,6 +93,11 @@ function Myform()
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+        items.map(item => (
+                
+            mem.push({"title":item["email"],"year":item["id"]})
+            
+        ))
       return(
           <>
           <Header token={tokenid}/>
@@ -107,11 +116,11 @@ function Myform()
         <form id = "form" onSubmit = {e => HandleSub(e)}>
             <TextField style={{width:'50vw'}}type = "text"id = "projtitle" name = "projtitle" placeholder = "project title" /><br/>
             <TextField style={{width:'50vw'}} type = "text"id = "wiki" name = "wiki" placeholder = "wiki" />
-            {items.map(item => (
-                <li>
-                {/* {mem.push("{title: "+item['email']+",year: "+item['id'])} */}
-                <Typography sx={{color:'#2185d0'}} variant="h7" component="div">{item["email"]+" : "}<input id = {item["id"]} type = "checkbox" value = {item["id"]} onChange = {(e) => handleMember(e)}></input></Typography><br/></li>
-            ))}
+            {/* {items.map(item => (
+                
+                mem.push({"title":item["email"],"year":item["id"]})
+                
+            ))} */}
             <Member mem = {mem}/>
             <Button type="submit" variant="contained" color="primary">Add</Button>
         </form></Box> </div></ul></div></>
