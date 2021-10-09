@@ -56,7 +56,8 @@ export default function App() {
         
         <Route path="/todo/project/id/:id/addlist">
           <Addlist />
-        </Route><Route path="/todo/project/id/:id1/list/id/:id2/cards/id/:id3">
+        </Route>
+        <Route path="/todo/project/id/:id1/list/id/:id2/cards/id/:id3">
             <Updatecard />
         </Route>
         <Route path="/todo/project/id/:id1/list/id/:id2/cards">
@@ -91,9 +92,7 @@ export default function App() {
         <Route path="/todo/user/info">
           <Admin/>
         </Route>
-        <Route path="/todo/auth">
-          <Auth />
-        </Route>
+        
         {/* <Route path="/todo/users">
           <Button />
         </Route> */}

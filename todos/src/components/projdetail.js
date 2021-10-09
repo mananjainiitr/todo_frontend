@@ -18,6 +18,7 @@ function MyComponent(id1) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
+    // var [email , setEmail] = useState([]);
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
@@ -28,11 +29,13 @@ function MyComponent(id1) {
       })
         .then(
           (result) => {
-              console.log(result['data']);
-            setIsLoaded(true);
-            setItems(result['data']);
+            
             items = result['data'];
-            console.log(items);
+            // email = items['creator']['email'];
+            setItems(result['data']);
+            // setEmail = (items['creator']['email']);
+            setIsLoaded(true);
+            // console.log(items['creator']['email']);
             
           },
           // Note: it's important to handle errors here
@@ -50,6 +53,7 @@ function MyComponent(id1) {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+      console.log(items);
       return (
         //   <p>{items[1]['projtitle']}</p>
         //   <p>hi</p>
@@ -61,8 +65,13 @@ function MyComponent(id1) {
                  <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
                        
                      <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{items['projtitle']}</Typography> 
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{items['wiki']}</Typography>
-                     <Typography variant="body2"><h5>Creator : {items['creator']}</h5></Typography>
+                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{items.wiki}</Typography>
+                     <Typography variant="body2">Creator : {items['creator']['email']}</Typography>
+                     <Typography variant="body2">Members :</Typography>
+                     {items["member"].map(item =>(
+                      <Button varient="contained" style={{backgroundColor:"rgb(242, 244, 247)",margin:"3px",border:"1px solid black"}} >{item['email']}</Button>
+                     ))}
+                     {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">{items['member']}</Typography> */}
                      <CardActions>
                      <Button size="small"><Link sx={{textDecoration:'None'}} to={"/todo/project/id/"+items.id+"/list"}>View List</Link></Button>
                      

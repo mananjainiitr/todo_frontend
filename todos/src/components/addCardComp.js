@@ -2,40 +2,42 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react';
 
 import TextField from '@material-ui/core/TextField'
-import { Box, Button,  Icon, Link, Typography } from '@mui/material';
+import { Box, Button, Icon, Link, Typography } from '@mui/material';
+
 import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
-import Projdetail from './projdetail';
 import Header from './Header';
-import { CardContent } from '@material-ui/core';
 function HomeIcon(props) {
     return (
       <Link to="/todo/project">
-        <SvgIcon {...props}>
-          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-        </SvgIcon></Link>
+      <SvgIcon {...props}>
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+      </SvgIcon></Link>
     );
   }
 
 function Myform()
 {   
-    
     var member =[];
-    const { id } = useParams();
-    
+    const {id1} = useParams();
+    const {id2} = useParams();
     function HandleSub(e)
     {
       e.preventDefault();
       console.log(e);
-      var project = document.getElementById("projtitle").value;
-      var wiki = document.getElementById("wiki").value;
+      var cardtitle = document.getElementById("cardtitle").value;
+      var desc = document.getElementById("desc").value;
+      var due_date= document.getElementById("due_date").value;
+      var is_completed = false;
+      
       const tokenid = localStorage.getItem("token");
   
-      axios.put("http://localhost:8000/todo/viewsets/project/"+id+"/",{
-        "projtitle": project,
-        "wiki": wiki,
-        "creator": 2,
-        "member": member},{
+      axios.post("http://localhost:8000/todo/viewsets/project/id/"+id1+"/list/id/"+id2+"/card/",{
+        "cardtitle":cardtitle,
+        "desc": desc,
+        "due_date":due_date,
+        "is_completed":is_completed,
+        "member_pk2": member},{
         headers: { 'Authorization':tokenid,}}
         
       ).then(function (response) {
@@ -91,34 +93,24 @@ function Myform()
       return <div>Loading...</div>;
     } else {
       return(
-        <>
-          <Header token={tokenid}/>
-          <div><ul style={{padding:'0px',backgroundColor:'#f2f4f7',margin:'0px'}}>
-          <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
-              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>UPDATE PROJECT</h3></CardContent>
-          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
-          <Link style={{textDecoration:"none",color:"black"}} href={"/todo/project/id/"+id+"/list"}><h3>Back</h3></Link>
-          </Box></Box></Box>
-        <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll",background:'#f2f4f7'}}>
-          <Box><Projdetail id = {id}/></Box>
-            <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
-           
-            
+    
+        <div style={{width:"35vw",padding:"2vw"}} >
+        <h3>ADD Card</h3> 
         <form id = "form" onSubmit = {e => HandleSub(e)}>
-            <TextField style={{width:'50vw'}}type = "text"id = "projtitle" name = "projtitle" placeholder = "project title" /><br/>
-            <TextField style={{width:'50vw'}} type = "text"id = "wiki" name = "wiki" placeholder = "wiki" />
+            <TextField style={{width:'35vw'}}type = "text"id = "cardtitle" name = "cardtitle" placeholder = "card title" /><br/>
+            <TextField style={{width:'35vw'}} type = "text"id = "desc" name = "desc" placeholder = "desc" /><br/>
+            <TextField style={{width:'35vw'}} type = "datetime-local" id = "due_date" name = "desc" placeholder = "due_date" /><br/>
+            
             {items.map(item => (
                 <li>
-                
                 <Typography sx={{color:'#2185d0'}} variant="h7" component="div">{item["email"]+" : "}<input id = {item["id"]} type = "checkbox" value = {item["id"]} onChange = {(e) => handleMember(e)}></input></Typography><br/></li>
             ))}
             <Button type="submit" variant="contained" color="primary">Add</Button>
-        </form></Box> </div></ul></div></>
+        </form></div>
     )
 }}
 
-export default function  Updateproject() {
+export default function  AddCardComp() {
     return(
         Myform()
     )

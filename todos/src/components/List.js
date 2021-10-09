@@ -16,6 +16,12 @@ import Deletelist from './deletelist';
 import Header from './Header';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import MUIRichTextEditor from 'mui-rte'
+import { Avatar, Grid } from '@material-ui/core';
+import AddprojectComp from './addProjComponent';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { green } from '@material-ui/core/colors';
+import AddlistComp from './addListComp';
+import ProjData from './projectData';
 
 const MyBlock = (props) => {
     return (
@@ -124,16 +130,15 @@ function MyComponent() {
         <>
         <Header token={tokenid}/>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
-            <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
-              <CardContent sx={{color:"white"}}>LISTS</CardContent>
-          <Button>
-          <Link to={"/todo/project/id/"+id+"/addlist"}>
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon></Link>
-          </Button>
-          <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
+        <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:'50vw'}}>
+              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>Lists</h3></CardContent>
+          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
+              <Link style={{textDecoration:"none",color:"black"}} to={"/todo/project/id/"+id+"/addlist"}><h3>ADD ➕</h3></Link>
+          </Box>
+          {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
           </Box></Box>
-          <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
+          {/* <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
           {items.map(item => (
             <li key={item.id}>
                 <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
@@ -148,12 +153,39 @@ function MyComponent() {
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id+"/list/id/"+item.id}>Update</Link></Button>
                      <Deletelist id1={id} id2={item.id}/>
                      </CardActions>
-                     <Typography variant="body2"><h5>Created By : {item['creator']}</h5></Typography>
+                     <Typography variant="body2"><h5>Created By : {item['creator']['email']}</h5></Typography>
                      </CardContent>
                      </Card><br></br></Box><br></br>
               
             </li>
           ))}
+          </div> */}
+          <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
+          <Grid container spacing={2} style={{justifyContent:"space-between"}}>
+          <AddlistComp />
+          <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
+            <ProjData id={id} />
+            <h3>Project Lists</h3>
+            {items.map(item => (
+            <li style={{minwidth:"50vw",margin:"0px"}} key={item.id}>
+                <Box style={{ minwidth:'50vw',display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
+                <Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id+"/list/id/"+item.id+"/cards"}>
+                 <Card style={{minWidth:"50vw",maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
+                 <Grid container spacing={2}>
+                 <Avatar style={{backgroundColor:"#1976d2",margin:"20px",}}>
+                    <AssignmentIcon /></Avatar>
+                     <Typography style={{padding:"20px",color:"black"}} sx={{color:'#2185d0'}} variant="h5" component="div">{item['listtitle']}
+                     <Typography style={{fontSize:"11px",color:"#2185d0"}}>By : {item['creator']['name']}<Typography type="date" >{item['due_date'].slice(0,10)}</Typography></Typography></Typography> </Grid>
+                     {/* <CardActions>
+                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
+                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
+                     <Deleteproject id={item.id} />
+                     </CardActions> */}
+                     </CardContent>
+                     </Card></Link></Box>
+              
+            </li>
+          ))}</div></Grid>
           </div>
         </ul></div></>
       );

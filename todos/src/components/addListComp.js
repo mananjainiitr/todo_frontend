@@ -7,7 +7,6 @@ import { Box, Button, Icon, Link, Typography } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
 import Header from './Header';
-import { CardContent } from '@material-ui/core';
 function HomeIcon(props) {
     return (
         <Link to="/todo/project">
@@ -43,8 +42,7 @@ function Myform()
         "desc": desc,
         "is_completed": is_completed,
         
-        "due_date":due_date},
-        {
+        "due_date":due_date},{
         headers: { 'Authorization':tokenid,}}
         
       ).then(function (response) {
@@ -52,31 +50,20 @@ function Myform()
     })}
 
       return(
-        <>
-        <Header token={tokenid}/>
-        <div><ul style={{padding:'0px',backgroundColor:'#f2f4f7',margin:'0px'}}>
-          <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
-              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>ADD PROJECTS</h3></CardContent>
-          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
-          <Link style={{textDecoration:"none",color:"black"}} href={"/todo/project/id/"+id+"/list"}><h3>Back</h3></Link>
-          </Box></Box></Box>
-        <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
-            
-            <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
              
-            
+        <div style={{width:"35vw",padding:"2vw"}} >
+        <h3>ADD List</h3> 
         <form id = "form" onSubmit = {e => HandleSub(e)}>
-            <TextField style={{width:'50vw'}}type = "text"id = "listtitle" name = "listtitle" placeholder = "list title" /><br/>
-            <TextField style={{width:'50vw'}} type = "text"id = "desc" name = "desc" placeholder = "list desc." /><br/>
+            <TextField style={{width:'35vw'}}type = "text"id = "listtitle" name = "listtitle" placeholder = "list title" /><br/>
+            <TextField style={{width:'35vw'}} type = "text"id = "desc" name = "desc" placeholder = "list desc." /><br/>
             
             <TextField id="due_date"type = "datetime-local"/><br/>
             <Button type="submit" variant="contained" color="primary">Add</Button>
-        </form></Box> </div></ul></div></>
+        </form></div>
     )
 }
 
-export default function  Addlist() {
+export default function  AddlistComp() {
     return(
         Myform()
     )

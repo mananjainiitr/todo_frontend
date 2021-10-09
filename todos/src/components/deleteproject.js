@@ -9,10 +9,11 @@ function Myfunc(id)
     axios.delete("http://localhost:8000/todo/viewsets/project/"+id+"/",{
         headers: { 'Authorization':tokenid,}
     }).then(function (response) {
+        console.log("http://localhost:8000/todo/viewsets/project/"+id+"/")
         console.log(response);
     })}
     return(<form id = "form" onSubmit = {e => HandleSub(e)}>
-        <Button sx={{marginLeft:'5px'}}variant="contained" size="small"type = "submit"> Delete </Button>
+        <Button style={{backgroundColor:"#F47174"}} sx={{marginLeft:'5px'}}variant="contained" size="small"type = "submit"> Delete </Button>
     </form>)
 }
 

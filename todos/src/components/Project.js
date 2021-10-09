@@ -14,6 +14,9 @@ import Icon from '@mui/material/Icon';
 import SvgIcon from '@mui/material/SvgIcon';
 import Deleteproject from './deleteproject';
 import Header from './Header';
+import Addproject from './addproject';
+import AddprojectComp from './addProjComponent';
+import { Avatar, Grid } from '@material-ui/core';
 // import LoadingButton from '@mui/lab/LoadingButton';
 function HomeIcon(props) {
     return (
@@ -67,34 +70,40 @@ function MyComponent() {
         <>
         <Header token={tokenid}/>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
-            <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
-              <CardContent sx={{color:"white"}}>PROJECTS</CardContent>
-          <Button onClick >
-              <Link to="/todo/project/addproject">
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon></Link>
-          </Button>
-          <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
+            <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:'52vw'}}>
+              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>PROJECTS</h3></CardContent>
+          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
+              <Link style={{textDecoration:"none",color:"black"}} to="/todo/project/addproject"><h3>ADD ➕</h3></Link>
+          </Box>
+          {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
           </Box></Box>
-          <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
-          {items.map(item => (
-            <li key={item.id}>
-                <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
+          <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
+          <Grid container spacing={2} style={{justifyContent:"space-between"}}>
+          <AddprojectComp />
+          <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
+            {items.map(item => (
+            <li style={{minwidth:"50vw"}} key={item.id}>
+                <Box sx={{ minwidth:'50vw',display:"flex",justifyContent:'right',margin:'0px'}}>
+                <Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>
                  <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
-                       
-                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{item['projtitle']}</Typography> 
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{item['wiki']}</Typography>
-                     <Typography variant="body2"><h5>Creator : {item['creator']}</h5></Typography>
-                     <CardActions>
+                 <Grid container spacing={2}>
+                     <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} variant="rounded">
+                     {((item['projtitle']).slice(0,1)).toUpperCase()}
+                     </Avatar>  
+                     <Typography style={{padding:"20px"}} sx={{color:'#2185d0'}} variant="h4" component="div">{item['projtitle']}
+                     <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Wiki : {item['wiki']}</Typography>
+                     <Typography style={{fontSize:"11px"}}>Creator : {item['creator']['name']}</Typography></Typography> </Grid>
+                     {/* <CardActions>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
                      <Deleteproject id={item.id} />
-                     </CardActions>
+                     </CardActions> */}
                      </CardContent>
-                     </Card><br></br></Box><br></br>
+                     </Card></Link><br></br></Box><br></br>
               
             </li>
-          ))}
+          ))}</div></Grid>
           </div>
         </ul></div></>
       );

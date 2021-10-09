@@ -8,6 +8,9 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import TextField from '@material-ui/core/TextField';
+import { Avatar, Grid } from '@material-ui/core';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import Deletelist from './deletelist';
 function DateAndTimePickers(datee , typee) {
     const { type } = typee
     // console.log("dat"+datee);
@@ -31,7 +34,7 @@ function MyComponent(id1,id2) {
     
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    var [items, setItems] = useState([]);
+    var [item, setItems] = useState([]);
     
     // Note: the empty deps array [] means
     // this useEffect will run once
@@ -47,14 +50,14 @@ function MyComponent(id1,id2) {
         .then(
           (result) => {
 
-            items = result['data'];
+            item = result['data'];
             setItems(result['data']);
-            console.log(items);
+            console.log(item);
             setIsLoaded(true);
             
             // items = result['data'];
             
-            console.log(items);
+            console.log(item);
             
           },
           // Note: it's important to handle errors here
@@ -83,34 +86,41 @@ function MyComponent(id1,id2) {
         //     </li>
         //   ))}
         // </ul>
-        <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
-    
-          
-         
-            <li key={items.id}>
-                <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
-                 <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
-                       
-                     <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{items['listtitle']}</Typography> 
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{items['desc']}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Start Date : {DateAndTimePickers(items['start_date'],"Start date :")}</Typography>
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">Due Date : {DateAndTimePickers(items['due_date'],'Due Date :')}</Typography>
-                     <CardActions>
-                     <Button size="small"><Link sx={{textDecoration:'None'}} to={"/todo/project/id/"+id1+"/list/id/"+items.id+"/cards"}>View Cards</Link></Button>
-                     
-                     </CardActions>
-                     <Typography variant="body2"><h5>Created By : {items['creator']['name']}</h5></Typography>
+        
+             <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
+           
+            <li style={{minwidth:"50vw",margin:"0px"}} key={item.id}>
+                <Box style={{ minwidth:'50vw',display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
+                
+                 <Card style={{minWidth:"50vw",maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
+                 <Grid container spacing={2}>
+                 <Avatar style={{backgroundColor:"#1976d2",margin:"20px",}}>
+                    <AssignmentIcon /></Avatar>
+                     <Typography style={{padding:"20px",color:"black"}} sx={{color:'#2185d0'}} variant="h5" component="div">{item['listtitle']}
+                     <Typography style={{color:"rgba(0, 0, 0, 0.6)"}}>Desc: {item['desc']}</Typography>
+                     <Typography style={{fontSize:"11px",color:"#2185d0"}}>By : {item['creator']['name']}<Typography type="date" >{item['due_date'].slice(0,10)}</Typography></Typography></Typography> </Grid>
+                     {/* <CardActions>
+                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
+                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
+                     <Deleteproject id={item.id} />
+                     </CardActions> */}
+                     <br></br>
+                     <br></br>
+                     <Grid container spacing={2}>
+                     <Button variant="contained" style={{backgroundColor:"#ACD1AF"}}size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id1+"/list/id/"+id2}>Update</Link></Button>
+                     <Deletelist id1={id1} id2={id2}/></Grid>
                      </CardContent>
-                     </Card><br></br></Box><br></br>
+                     </Card></Box>
               
             </li>
+        </div>
           
-        </ul></div>
+        
       );
     }
   }
 
-  export default function ListDetail(props){
+  export default function ListData(props){
 
 
 //   {     console.log(props.user);

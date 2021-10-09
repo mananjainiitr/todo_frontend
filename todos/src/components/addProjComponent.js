@@ -3,14 +3,13 @@ import React, { useState, useEffect } from 'react';
 
 import TextField from '@material-ui/core/TextField'
 import { Box, Button,  Icon, Link, Typography } from '@mui/material';
+
 import SvgIcon from '@mui/material/SvgIcon';
-import { useParams } from 'react-router';
-import Projdetail from './projdetail';
 import Header from './Header';
-import { CardContent } from '@material-ui/core';
+
 function HomeIcon(props) {
     return (
-      <Link to="/todo/project">
+        <Link href="/todo/project">
         <SvgIcon {...props}>
           <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
         </SvgIcon></Link>
@@ -19,10 +18,7 @@ function HomeIcon(props) {
 
 function Myform()
 {   
-    
     var member =[];
-    const { id } = useParams();
-    
     function HandleSub(e)
     {
       e.preventDefault();
@@ -31,11 +27,10 @@ function Myform()
       var wiki = document.getElementById("wiki").value;
       const tokenid = localStorage.getItem("token");
   
-      axios.put("http://localhost:8000/todo/viewsets/project/"+id+"/",{
+      axios.post("http://localhost:8000/todo/viewsets/project/",{
         "projtitle": project,
         "wiki": wiki,
-        "creator": 2,
-        "member": member},{
+        "member_pk2": member},{
         headers: { 'Authorization':tokenid,}}
         
       ).then(function (response) {
@@ -91,34 +86,22 @@ function Myform()
       return <div>Loading...</div>;
     } else {
       return(
-        <>
-          <Header token={tokenid}/>
-          <div><ul style={{padding:'0px',backgroundColor:'#f2f4f7',margin:'0px'}}>
-          <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
-              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>UPDATE PROJECT</h3></CardContent>
-          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
-          <Link style={{textDecoration:"none",color:"black"}} href={"/todo/project/id/"+id+"/list"}><h3>Back</h3></Link>
-          </Box></Box></Box>
-        <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll",background:'#f2f4f7'}}>
-          <Box><Projdetail id = {id}/></Box>
-            <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
-           
-            
+          
+          <div style={{width:"35vw",padding:"2vw"}} >
+              <h3>ADD PROJECT</h3>
         <form id = "form" onSubmit = {e => HandleSub(e)}>
-            <TextField style={{width:'50vw'}}type = "text"id = "projtitle" name = "projtitle" placeholder = "project title" /><br/>
-            <TextField style={{width:'50vw'}} type = "text"id = "wiki" name = "wiki" placeholder = "wiki" />
-            {items.map(item => (
-                <li>
-                
-                <Typography sx={{color:'#2185d0'}} variant="h7" component="div">{item["email"]+" : "}<input id = {item["id"]} type = "checkbox" value = {item["id"]} onChange = {(e) => handleMember(e)}></input></Typography><br/></li>
-            ))}
-            <Button type="submit" variant="contained" color="primary">Add</Button>
-        </form></Box> </div></ul></div></>
-    )
+        <TextField style={{width:'30vw'}}type = "text"id = "projtitle" name = "projtitle" placeholder = "project title" /><br/>
+        <TextField style={{width:'30vw'}} type = "text"id = "wiki" name = "wiki" placeholder = "wiki" />
+        {items.map(item => (
+            <li>
+            <Typography sx={{color:'#2185d0'}} variant="h7" component="div">{item["email"]+" : "}<input id = {item["id"]} type = "checkbox" value = {item["id"]} onChange = {(e) => handleMember(e)}></input></Typography><br/></li>
+        ))}
+        <Button type="submit" variant="contained" color="primary">Add</Button>
+    </form></div>
+    );
 }}
 
-export default function  Updateproject() {
+export default function  AddprojectComp() {
     return(
         Myform()
     )

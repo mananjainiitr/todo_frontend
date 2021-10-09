@@ -99,7 +99,7 @@ function MyComponent(id1,id2,id3) {
                      <CardActions>
                      <Button size="small"><Link sx={{textDecoration:'None'}} to={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards"}>View Assigned Members</Link></Button> 
                      </CardActions>
-                     <Typography variant="body2"><h5>Created By : {items['creator']}</h5></Typography>
+                     <Typography variant="body2"><h5>Created By : {items['creator']['name']}</h5></Typography>
                      </CardContent>
                      </Card><br></br></Box><br></br>
               

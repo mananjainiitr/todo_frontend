@@ -12,7 +12,7 @@ function Myfunc(id1,id2)
         console.log(response);
     })}
     return(<form id = "form" onSubmit = {e => HandleSub(e)}>
-        <Button sx={{marginLeft:'5px'}}variant="contained" size="small"type = "submit"> Delete </Button>
+        <Button style={{backgroundColor:"#F47174"}} sx={{marginLeft:'5px'}}variant="contained" size="small"type = "submit"> Delete </Button>
     </form>)
 }
 

@@ -6,6 +6,8 @@ import { Box, Button,  Icon, Link, Typography } from '@mui/material';
 
 import SvgIcon from '@mui/material/SvgIcon';
 import Header from './Header';
+import { CardContent } from '@material-ui/core';
+import Member from './member';
 
 function HomeIcon(props) {
     return (
@@ -18,6 +20,7 @@ function HomeIcon(props) {
 
 function Myform()
 {   
+    var mem=[];
     var member =[];
     function HandleSub(e)
     {
@@ -89,19 +92,15 @@ function Myform()
       return(
           <>
           <Header token={tokenid}/>
-        <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
-            <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
+          <div><ul style={{padding:'0px',backgroundColor:'#f2f4f7',margin:'0px'}}>
+          <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
+              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>ADD PROJECTS</h3></CardContent>
+          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
+          <Link style={{textDecoration:"none",color:"black"}} href="/todo/project"><h3>Back</h3></Link>
+          </Box></Box></Box>
           
-             <Button sx={{color:"white"}}><Link sx={{textDecoration:"none",color:"white"}} href="/todo/project">PROJECTS</Link></Button>
-          <Button onClick >
-              <Link to="project/addproject">
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon>
-              </Link>
-          </Button>
-          <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>         
-          </Box></Box>
-          <Typography sx={{color:'#2185d0',textAlign:'center'}} variant="h5" component="div">Add Project</Typography><br></br>
+          <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll"}}>
             <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
              
             
@@ -110,10 +109,12 @@ function Myform()
             <TextField style={{width:'50vw'}} type = "text"id = "wiki" name = "wiki" placeholder = "wiki" />
             {items.map(item => (
                 <li>
+                {/* {mem.push("{title: "+item['email']+",year: "+item['id'])} */}
                 <Typography sx={{color:'#2185d0'}} variant="h7" component="div">{item["email"]+" : "}<input id = {item["id"]} type = "checkbox" value = {item["id"]} onChange = {(e) => handleMember(e)}></input></Typography><br/></li>
             ))}
+            <Member mem = {mem}/>
             <Button type="submit" variant="contained" color="primary">Add</Button>
-        </form></Box> </div></>
+        </form></Box> </div></ul></div></>
     )
 }}
 

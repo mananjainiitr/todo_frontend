@@ -1,20 +1,45 @@
-import { Button } from "@mui/material";
+import { Paper, styled } from "@material-ui/core";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
 
+const Item = styled(Paper)(({ theme }) => ({
+    
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
 
 export default function Login() {
-    
-//     function HandleSub(e)
-// {
-//     e.preventDefault();
-//     // document.location.href = "https://channeli.in/oauth/authorise/?client_id=STTrMkmTfDZEuFoDKj45uM6YEN4FXXXByWzltpRg&redirect_uri=http://localhost:3000/todo/auth&state=RANDOM_STATE_STRING";
-//     document.location.href = "http://127.0.0.1:8000/todo/channeli"
-// }
-    
         return(
-        // <form id = "form" onSubmit = {e => HandleSub(e)}>
-        <Button sx={{marginLeft:'5px'}}variant="contained" size="small"type = "submit"><a href="http://127.0.0.1:8000/todo/channeli">Channeli</a></Button>
-    // </form>
+            <Grid
+            backgroundColor = "#1976d2"
+            height = "100vh"
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            >
+            <Box display="grid" gridTemplateColumns="repeat(10, 1fr)" gap={2}>
+            
+            <Box gridColumn="span 10">
+            <Item><Typography>Login With Channeli</Typography></Item>
+            </Box>
+
+            <Box gridColumn="span 10">
+            <Item><Typography>Todo app</Typography></Item>
+            </Box>
+            
+            <Box gridColumn="span 10"> 
+            <Item><Button sx={{marginLeft:'5px'}}variant="contained" size="small"><a href="http://127.0.0.1:8000/todo/channeli">Channeli</a></Button>      
+            </Item>
+            </Box> 
+           
+            
+            </Box>
+            </Grid>
+
+            
+        
     )
             
 }

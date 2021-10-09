@@ -8,6 +8,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
 import ListDetail from './listdetail';
 import Header from './Header';
+import { CardContent } from '@material-ui/core';
 function HomeIcon(props) {
     return (
       <Link to="/todo/project">
@@ -56,18 +57,15 @@ function Myform()
       return(
         <>
           <Header token={tokenid}/>
+          <div><ul style={{padding:'0px',backgroundColor:'#f2f4f7',margin:'0px'}}>
+          <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
+              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>Update List</h3></CardContent>
+          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
+          <Link style={{textDecoration:"none",color:"black"}} href={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards"}><h3>Back</h3></Link>
+          </Box></Box></Box>
         <div style={{height:"80vh",background:'#f2f4f7',listStyleType:'None',overflowY:"scroll"}}>
-            <Box sx={{backgroundColor:'rgb(100, 53, 201)',display:"flex",justifyContent:'center'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',backgroundColor:'rgb(100, 53, 201)',width:'50vw'}}>
-          
-             <Button sx={{color:"white"}}><Link sx={{textDecoration:"none",color:"white"}} href={"/todo/project/id/"+id1+"/list"}>Lists</Link></Button>
-          <Button onClick >
-              
-              <Icon sx={{ fontSize: 30 , color:'white'}}>add_circle</Icon>
-          </Button>
-          <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>
-          </Box></Box>
-          <Typography sx={{color:'#2185d0',textAlign:'center'}} variant="h5" component="div">Add List</Typography><br></br>
+            
           <ListDetail id1={id1} id2={id2}/>
             <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
              
@@ -78,7 +76,7 @@ function Myform()
             
             <TextField id="due_date"type = "datetime-local"/><br/>
             <Button type="submit" variant="contained" color="primary">Add</Button>
-        </form></Box> </div></>
+        </form></Box> </div></ul></div></>
     )
 }
 
