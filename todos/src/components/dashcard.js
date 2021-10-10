@@ -13,7 +13,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@material-ui/core/TextField';
 import Deletecard from './deletecard';
 import Header from './Header';
-import { Avatar, Grid } from '@material-ui/core';
+import { Avatar, Grid, useMediaQuery } from '@material-ui/core';
 import AddCardComp from './addCardComp';
 import ListData from './listData';
 import UserProfile from './userprofile';
@@ -57,7 +57,8 @@ function HomeIcon(props) {
     );
   }
 function MyComponent(name , email , year , is_admin) {
-    
+    var width = "50vw";
+    const isactive = useMediaQuery("(max-width : 830px)")
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
@@ -96,12 +97,15 @@ function MyComponent(name , email , year , is_admin) {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+        if(isactive){
+            width = "100vw"
+        }
       return (
         <>
         <Header token={tokenid}/>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
         <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:width}}>
               <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>DASHBOARD</h3></CardContent>
           <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
           <h3>Card&nbsp;</h3>
@@ -111,14 +115,14 @@ function MyComponent(name , email , year , is_admin) {
         <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
         <Grid container spacing={2} style={{justifyContent:"space-between"}}>
         <UserProfile name={name} email={email} year={year} is_admin={is_admin} />
-        <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
+        <div style={{minwidth:width,flexWrap:"wrap"}}>
           
          
           {items.map(item => (
-          <li style={{minwidth:"50vw",margin:"0px"}} key={item.id}>
-              <Box style={{ minwidth:'50vw',display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
+          <li style={{minwidth:width,margin:"0px"}} key={item.id}>
+              <Box style={{ minwidth:width,display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
               
-               <Card style={{minWidth:"50vw",maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
+               <Card style={{minWidth:width,maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
                <Grid container spacing={2}>
                <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} variant="rounded">
                    {((item['cardtitle']).slice(0,1)).toUpperCase()}

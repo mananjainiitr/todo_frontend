@@ -8,7 +8,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
 import ListDetail from './listdetail';
 import Header from './Header';
-import { CardContent, Switch } from '@material-ui/core';
+import { CardContent, Switch, useMediaQuery } from '@material-ui/core';
 function HomeIcon(props) {
     return (
       <Link to="/todo/project">
@@ -20,7 +20,9 @@ function HomeIcon(props) {
 
 function Myform()
 {   
-  const tokenid = localStorage.getItem("token");
+   var width = "50vw";
+   const isactive = useMediaQuery("(max-width : 830px)")
+   const tokenid = localStorage.getItem("token");
     const { id1 } = useParams();
     const { id2 } = useParams();
     
@@ -52,14 +54,29 @@ function Myform()
         
       ).then(function (response) {
         console.log(response);
-    })}
+        window.location.reload();
+    }).catch(function (erro) {
+      console.log((erro.message).slice(-3));
+      if((erro.message).slice(-3)==400)
+      {
+      console.log(document.getElementById("err").innerHTML = '<h3>ERROR: PLEASE ENTER UNIQUE TITLE NAME</h3>');
+      }
+      else{
+       console.log(document.getElementById("err").innerHTML = '<h3>ERROR: Some error has occured </h3>');
+      }
+     });
+  }
 
+       if (isactive)
+       {
+         width = "100vw"
+       }
       return(
         <>
           <Header token={tokenid}/>
           <div><ul style={{padding:'0px',backgroundColor:'#f2f4f7',margin:'0px'}}>
           <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',width:'53vw'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:width}}>
               <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>Update List</h3></CardContent>
           <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
           <Link style={{textDecoration:"none",color:"black"}} href={"/todo/project/id/"+id1+"/list/id/"+id2+"/cards"}><h3>Back</h3></Link>
@@ -71,6 +88,7 @@ function Myform()
              
             
         <form id = "form" onSubmit = {e => HandleSub(e)}>
+        <div style={{backgroundColor:'#FF9494',borderRadius:"5px",textAlign:"center"}}id = "err"></div>
             <TextField style={{width:'50vw'}}type = "text"id = "listtitle" name = "listtitle" placeholder = "list title" /><br/>
             <TextField style={{width:'50vw'}} type = "text"id = "desc" name = "desc" placeholder = "list desc." /><br/>
             

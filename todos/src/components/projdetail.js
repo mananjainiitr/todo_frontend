@@ -65,7 +65,8 @@ function MyComponent(id1) {
                  <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
                        
                      <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{items['projtitle']}</Typography> 
-                     <Typography sx={{ mb: 1.5 }} color="text.secondary">{items.wiki}</Typography>
+                     {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">{items.wiki}</Typography> */}
+                     <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary"component="h1" variant="h6" gutterBottom dangerouslySetInnerHTML={{__html: items['wiki']}}></Typography>
                      <Typography variant="body2">Creator : {items['creator']['email']}</Typography>
                      <Typography variant="body2">Members :</Typography>
                      {items["member"].map(item =>(

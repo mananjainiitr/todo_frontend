@@ -24,7 +24,7 @@ function Myform()
     
     function HandleSub(e)
     {
-      e.preventDefault();
+    //   e.preventDefault();
       console.log(e);
       var list = document.getElementById("listtitle").value;
       var desc = document.getElementById("desc").value;
@@ -49,7 +49,18 @@ function Myform()
         
       ).then(function (response) {
         console.log(response);
-    })}
+        window.location.reload();
+    }).catch(function (erro) {
+        console.log((erro.message).slice(-3));
+        if((erro.message).slice(-3)==400)
+        {
+        console.log(document.getElementById("err").innerHTML = '<h3>ERROR: PLEASE ENTER UNIQUE TITLE NAME</h3>');
+        }
+        else{
+         console.log(document.getElementById("err").innerHTML = '<h3>ERROR: Some error has occured </h3>');
+        }
+       });
+}
 
       return(
         <>
@@ -67,6 +78,7 @@ function Myform()
              
             
         <form id = "form" onSubmit = {e => HandleSub(e)}>
+        <div style={{backgroundColor:'#FF9494',borderRadius:"5px",textAlign:"center"}}id = "err"></div>
             <TextField style={{width:'50vw'}}type = "text"id = "listtitle" name = "listtitle" placeholder = "list title" /><br/>
             <TextField style={{width:'50vw'}} type = "text"id = "desc" name = "desc" placeholder = "list desc." /><br/>
             

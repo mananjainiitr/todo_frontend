@@ -7,7 +7,7 @@ import { Box, Button, Icon, Link, Typography } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
 import Header from './Header';
-import { Card } from '@material-ui/core';
+import { Card, useMediaQuery } from '@material-ui/core';
 function HomeIcon(props) {
     return (
         <Link to="/todo/project">
@@ -28,11 +28,15 @@ function myfunc(is_admin){
 
 function Myform(name,email,year,is_admin)
 
- {  
+ {   var width = "35vw";
+ const isactive = useMediaQuery("(max-width : 830px)")
+   if (isactive){
+       width = '100vw'
+   }
 
       return(
              
-        <div style={{width:"35vw",padding:"2vw"}} >
+        <div style={{width:width,padding:"2vw"}} >
         <Card style={{padding:'20px'}}>
         <h3>Profile</h3> 
         <Typography>NAME : {name}</Typography>

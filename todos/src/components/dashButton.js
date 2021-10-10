@@ -104,9 +104,9 @@ export default function DashButton(props) {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}><Link style={{ textDecoration:"none" , color:"black" }} to="/todo/project">Home</Link></MenuItem>
-                    <MenuItem onClick={handleClose}><Link style={{ textDecoration:"none" , color:"black" }} to="/todo/dashboard/project">Member of Projects</Link></MenuItem>
-                    <MenuItem onClick={handleClose}><Link style={{ textDecoration:"none" , color:"black" }} to="/todo/dashboard/card">Cards Assigned</Link></MenuItem>
+                    <Link style={{ textDecoration:"none" , color:"black" }} to="/todo/project"><MenuItem onClick={handleClose}>Home</MenuItem></Link>
+                    <Link style={{ textDecoration:"none" , color:"black" }} to="/todo/dashboard/project"><MenuItem onClick={handleClose}>Member of Projects</MenuItem></Link>
+                    <Link style={{ textDecoration:"none" , color:"black" }} to="/todo/dashboard/card"><MenuItem onClick={handleClose}>Cards Assigned</MenuItem></Link>
                     <MenuItem onClick={handleClose}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>

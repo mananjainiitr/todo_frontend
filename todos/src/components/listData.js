@@ -8,7 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import TextField from '@material-ui/core/TextField';
-import { Avatar, Grid } from '@material-ui/core';
+import { Avatar, Grid, useMediaQuery } from '@material-ui/core';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Deletelist from './deletelist';
 function DateAndTimePickers(datee , typee) {
@@ -42,7 +42,8 @@ function myfunc(is_completed)
     }
 }
 function MyComponent(id1,id2) {
-    
+    var width = "50vw";
+    const isactive = useMediaQuery("(max-width : 830px)")
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [item, setItems] = useState([]);
@@ -86,6 +87,9 @@ function MyComponent(id1,id2) {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+        if(isactive){
+            width = "100vw"
+        }
       return (
         //   <p>{items[1]['projtitle']}</p>
         //   <p>hi</p>
@@ -98,12 +102,12 @@ function MyComponent(id1,id2) {
         //   ))}
         // </ul>
         
-             <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
+             <div style={{minwidth:width,flexWrap:"wrap"}}>
            
-            <li style={{minwidth:"50vw",margin:"0px"}} key={item.id}>
-                <Box style={{ minwidth:'50vw',display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
+            <li style={{minwidth:width,margin:"0px"}} key={item.id}>
+                <Box style={{ minwidth:width,display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
                 
-                 <Card style={{minWidth:"50vw",maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
+                 <Card style={{minWidth:width,maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
                  <Grid container spacing={2}>
                  <Avatar style={{backgroundColor:"#1976d2",margin:"20px",}}>
                     <AssignmentIcon /></Avatar>

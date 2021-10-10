@@ -16,7 +16,7 @@ import Deleteproject from './deleteproject';
 import Header from './Header';
 import Addproject from './addproject';
 import AddprojectComp from './addProjComponent';
-import { Avatar, Grid } from '@material-ui/core';
+import { Avatar, Grid, useMediaQuery } from '@material-ui/core';
 // import LoadingButton from '@mui/lab/LoadingButton';
 function HomeIcon(props) {
     return (
@@ -26,10 +26,16 @@ function HomeIcon(props) {
         </SvgIcon></Link>
     );
   }
-
+function addprojfunc(isactive)
+{
+    if (!(isactive))
+    {
+        return (<AddprojectComp />)
+    }
+}
 function MyComponent() {
-    
-    
+    var width = "50vw";
+    const isactive = useMediaQuery("(max-width : 830px)")
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
@@ -58,12 +64,16 @@ function MyComponent() {
           }
         )
     }, [])
-  
+    
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+       if(isactive)
+       {
+           width = '100vw';
+       }
       return (
         //   <p>{items[1]['projtitle']}</p>
         //   <p>hi</p>
@@ -71,7 +81,7 @@ function MyComponent() {
         <Header token={tokenid}/>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
             <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',width:'52vw'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:width}}>
               <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>PROJECTS</h3></CardContent>
           <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
               <Link style={{textDecoration:"none",color:"black"}} to="/todo/project/addproject"><h3>ADD ➕</h3></Link>
@@ -80,19 +90,22 @@ function MyComponent() {
           </Box></Box>
           <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
           <Grid container spacing={2} style={{justifyContent:"space-between"}}>
-          <AddprojectComp />
+          {addprojfunc(isactive)}    
+          {/* <AddprojectComp /> */}
           <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
             {items.map(item => (
-            <li style={{minwidth:"50vw"}} key={item.id}>
-                <Box sx={{ minwidth:'50vw',display:"flex",justifyContent:'right',margin:'0px'}}>
+            <li style={{width:width}} key={item.id}>
+                <Box sx={{ minwidth:width,display:"flex",justifyContent:'right',margin:'0px'}}>
                 <Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>
-                 <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
+                 <Card sx={{minWidth:width,maxWidth:"800px",margin:'0px'}}><CardContent> 
                  <Grid container spacing={2}>
                      <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} variant="rounded">
                      {((item['projtitle']).slice(0,1)).toUpperCase()}
                      </Avatar>  
                      <Typography style={{padding:"20px"}} sx={{color:'#2185d0'}} variant="h4" component="div">{item['projtitle']}
-                     <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Wiki : {item['wiki']}</Typography>
+                     <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary"component="h1" variant="h6" gutterBottom dangerouslySetInnerHTML={{__html: item['wiki']}}></Typography>
+                     {/* <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Wiki : {item['wiki']}</Typography> */}
+                     
                      <Typography style={{fontSize:"11px"}}>Creator : {item['creator']['name']}</Typography></Typography> </Grid>
                      {/* <CardActions>
                      <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
@@ -119,6 +132,8 @@ function MyComponent() {
     const userName = new URLSearchParams(search).get('Token');
     if(userName){
     localStorage.setItem("token",userName)}
+   
+    
             console.log(localStorage.getItem("token"));
        return (MyComponent());
   }

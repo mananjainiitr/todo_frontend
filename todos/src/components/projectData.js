@@ -12,11 +12,12 @@ import Button from '@mui/material/Button';
 import { Avatar , Box , Divider  } from '@mui/material';
 import Icon from '@mui/material/Icon';
 import SvgIcon from '@mui/material/SvgIcon';
-import { Grid } from '@material-ui/core';
+import { Grid, useMediaQuery } from '@material-ui/core';
 import Deleteproject from './deleteproject';
 function MyComponent(id1) {
     const id = id1
-    
+    var width = "50vw";
+    const isactive = useMediaQuery("(max-width : 830px)")
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [item, setItems] = useState([]);
@@ -56,6 +57,9 @@ function MyComponent(id1) {
       return <div>Loading...</div>;
     } else {
       console.log(item);
+      if(isactive){
+          width = "100vw";
+      }
       return (
         //   <p>{items[1]['projtitle']}</p>
         //   <p>hi</p>
@@ -89,18 +93,19 @@ function MyComponent(id1) {
            
           
         // </ul></div>
-        <div style={{minwidth:"51.3vw",flexWrap:"wrap"}}>
-            <h3>Project details</h3>
-            <li style={{minwidth:"51.3vw"}} key={item.id}>
-                <Box sx={{ minwidth:'51.3vw',display:"flex",justifyContent:'right',margin:'0px'}}>
+        <div style={{minwidth:width,flexWrap:"wrap"}}>
+            <h3 style={{paddingLeft:'10px'}}>Project details</h3>
+            <li style={{minwidth:width,margin:'0px'}} key={item.id}>
+                <Box sx={{ minwidth:width,display:"flex",justifyContent:'center',margin:'0px'}}>
                 
-                 <Card sx={{minWidth:"51.3vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
+                 <Card sx={{minWidth:width,maxWidth:"800px",margin:'0px'}}><CardContent> 
                  <Grid container spacing={2}>
                      <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} variant="rounded">
                      {((item['projtitle']).slice(0,1)).toUpperCase()}
                      </Avatar>  
                      <Typography style={{padding:"20px"}} sx={{color:'#2185d0'}} variant="h4" component="div">{item['projtitle']}
-                     <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Wiki : {item['wiki']}</Typography>
+                     {/* <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Wiki : {item['wiki']}</Typography> */}
+                     <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary"component="h1" variant="h6" gutterBottom dangerouslySetInnerHTML={{__html: item['wiki']}}></Typography>
                      <Typography style={{fontSize:"11px"}}>Creator : {item['creator']['name']}</Typography></Typography> </Grid>
                      <br></br>
                      

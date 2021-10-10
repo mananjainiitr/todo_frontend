@@ -7,7 +7,8 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { useParams } from 'react-router';
 import Carddetail from './cardDetail';
 import Header from './Header';
-import { CardContent } from '@material-ui/core';
+import { CardContent, Switch } from '@material-ui/core';
+import Member from './member';
 function HomeIcon(props) {
     return (
       <Link to="/todo/project">
@@ -18,7 +19,7 @@ function HomeIcon(props) {
   }
 
 function Myform()
-{   
+{   var mem=[];
     var member =[];
     const {id1} = useParams();
     const {id2} = useParams();
@@ -30,7 +31,11 @@ function Myform()
       var cardtitle = document.getElementById("cardtitle").value;
       var desc = document.getElementById("desc").value;
       var due_date= document.getElementById("due_date").value;
-      var is_completed = false;
+      var is_completed = document.getElementById("check").checked;
+      var people = []
+      var mem = document.getElementById("one").value;
+      people = mem.split(",")
+      console.log(people);
       
       const tokenid = localStorage.getItem("token");
   
@@ -39,14 +44,23 @@ function Myform()
         "desc": desc,
         "due_date":due_date,
         "is_completed":is_completed,
-        "list_id":id2,
-        "creator": 2,
-        "member": member},{
+        "member_pk2": people},{
         headers: { 'Authorization':tokenid,}}
         
       ).then(function (response) {
         console.log(response);
-    })}
+        window.location.reload();
+    }).catch(function (erro) {
+      console.log((erro.message).slice(-3));
+      if((erro.message).slice(-3)==400)
+      {
+      console.log(document.getElementById("err").innerHTML = '<h3>ERROR: PLEASE ENTER UNIQUE TITLE NAME</h3>');
+      }
+      else{
+       console.log(document.getElementById("err").innerHTML = '<h3>ERROR: Some error has occured </h3>');
+      }
+     });
+  }
 
     
 
@@ -96,6 +110,11 @@ function Myform()
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+      items.map(item => (
+                
+        mem.push({"title":item["email"],"year":item["id"]})
+        
+    ))
       return(
         <>
           <Header token={tokenid}/>
@@ -115,14 +134,17 @@ function Myform()
              
             
         <form id = "form" onSubmit = {e => HandleSub(e)}>
+        <div style={{backgroundColor:'#FF9494',borderRadius:"5px",textAlign:"center"}}id = "err"></div>
             <TextField style={{width:'50vw'}}type = "text"id = "cardtitle" name = "cardtitle" placeholder = "card title" /><br/>
             <TextField style={{width:'50vw'}} type = "text"id = "desc" name = "desc" placeholder = "desc" /><br/>
             <TextField style={{width:'50vw'}} type = "datetime-local" id = "due_date" name = "desc" placeholder = "due_date" /><br/>
-            
-            {items.map(item => (
+            <Member mem = {mem}/>
+            <Typography > Is Completed : 
+            <Switch id = "check"{..."is completed"} /></Typography><br></br>
+            {/* {items.map(item => (
                 <li>
                 <Typography sx={{color:'#2185d0'}} variant="h7" component="div">{item["email"]+" : "}<input id = {item["id"]} type = "checkbox" value = {item["id"]} onChange = {(e) => handleMember(e)}></input></Typography><br/></li>
-            ))}
+            ))} */}
             <Button type="submit" variant="contained" color="primary">Add</Button>
         </form></Box> </div></Box></div></ul></div></>
     )

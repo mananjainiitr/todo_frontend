@@ -25,6 +25,7 @@ import Updatecard from './components/updateCard';
 import Deleteproject from './components/deleteproject';
 import Dashboard from './components/Dashboard';
 import Admin from './components/Admin';
+import Authenticate from './components/authenticate';
 
 // import Addproject from "./pages/ExplorePage";
 
@@ -53,7 +54,9 @@ export default function App() {
             <Addcard />
           </Route>
           
-        
+        <Route path = "/todo/authenticate">
+          <Authenticate />
+        </Route>
         <Route path="/todo/project/id/:id/addlist">
           <Addlist />
         </Route>

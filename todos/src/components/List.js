@@ -16,7 +16,7 @@ import Deletelist from './deletelist';
 import Header from './Header';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import MUIRichTextEditor from 'mui-rte'
-import { Avatar, Grid } from '@material-ui/core';
+import { Avatar, Grid, useMediaQuery } from '@material-ui/core';
 import AddprojectComp from './addProjComponent';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { green } from '@material-ui/core/colors';
@@ -74,8 +74,16 @@ function HomeIcon(props) {
         </SvgIcon></Link>
     );
   }
+  function addlistfunc(isactive)
+{
+    if (!(isactive))
+    {
+        return (<AddlistComp />)
+    }
+}
 function MyComponent() {
-    
+    var width = "50vw"
+    const isactive = useMediaQuery("(max-width : 830px)")
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
@@ -116,6 +124,10 @@ function MyComponent() {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+        if (isactive)
+        {
+            width = "100vw"
+        }
       return (
         //   <p>{items[1]['projtitle']}</p>
         //   <p>hi</p>
@@ -131,7 +143,7 @@ function MyComponent() {
         <Header token={tokenid}/>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
         <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
-          <Box sx={{ display:"flex",justifyContent:'space-between',width:'50vw'}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:width}}>
               <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>Lists</h3></CardContent>
           <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
               <Link style={{textDecoration:"none",color:"black"}} to={"/todo/project/id/"+id+"/addlist"}><h3>ADD ➕</h3></Link>
@@ -162,15 +174,16 @@ function MyComponent() {
           </div> */}
           <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
           <Grid container spacing={2} style={{justifyContent:"space-between"}}>
-          <AddlistComp />
+              
+          {addlistfunc(isactive)} 
           <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
             <ProjData id={id} />
-            <h3>Project Lists</h3>
+            <h3 style={{paddingLeft:'10px'}}>Project Lists</h3>
             {items.map(item => (
-            <li style={{minwidth:"50vw",margin:"0px"}} key={item.id}>
-                <Box style={{ minwidth:'50vw',display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
+            <li style={{minwidth:width,margin:"0px"}} key={item.id}>
+                <Box style={{ minwidth:width,display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
                 <Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id+"/list/id/"+item.id+"/cards"}>
-                 <Card style={{minWidth:"50vw",maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
+                 <Card style={{minWidth:width,maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
                  <Grid container spacing={2}>
                  <Avatar style={{backgroundColor:"#1976d2",margin:"20px",}}>
                     <AssignmentIcon /></Avatar>
