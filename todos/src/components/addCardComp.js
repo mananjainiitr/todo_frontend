@@ -60,7 +60,39 @@ function Myform()
        });
 }
 
+function HandleCardChange(e)
+{   
     
+    console.log(e.target.value)
+    var check
+    const tokenid = localStorage.getItem("token");
+    if(e.target.value.length)
+    {
+    axios.get("http://localhost:8000/todo/validate/card/"+id2+"/"+e.target.value+"/data/",{
+        headers: { 'Authorization':tokenid,}
+    })
+        .then(
+        (result) => {
+                check = (result['data']['count'])
+                console.log(e.target.value.length)
+                
+                if(check == 1)
+                {
+                    document.getElementById("validate").style.color = "red";
+                    document.getElementById("validate").innerHTML = "Not available";
+                }
+                else{
+                    document.getElementById("validate").style.color = "green";
+                    document.getElementById("validate").innerHTML = "Available";
+                }
+               
+            
+        })}
+        else{
+            document.getElementById("validate").style.color = "red";
+                    document.getElementById("validate").innerHTML = "Can't be Blank";
+        }
+}
 
     function handleMember(e)
     {   
@@ -110,7 +142,7 @@ function Myform()
     } else {
         items.map(item => (
                 
-            mem.push({"title":item["email"],"year":item["id"]})
+            mem.push({"title":item["name"],"year":item["id"]})
             
         ))
       return(
@@ -119,11 +151,12 @@ function Myform()
         <h3>ADD Card</h3> 
         <form id = "form" onSubmit = {e => HandleSub(e)}>
         <div style={{backgroundColor:'#FF9494',borderRadius:"5px",textAlign:"center"}}id = "err"></div>
-            <TextField style={{width:'35vw'}}type = "text"id = "cardtitle" name = "cardtitle" placeholder = "card title" /><br/>
-            <TextField style={{width:'35vw'}} type = "text"id = "desc" name = "desc" placeholder = "desc" /><br/>
+        <div id="validate" ></div>
+            <TextField style={{width:'35vw'}}type = "text"id = "cardtitle" name = "cardtitle" placeholder = "Card Title" onChange = {e => HandleCardChange(e)} required="true"/><br/>
+            <TextField style={{width:'35vw'}} type = "text"id = "desc" name = "desc" placeholder = "Description" /><br/>
             <TextField style={{width:'35vw'}} type = "datetime-local" id = "due_date" name = "desc" placeholder = "due_date" /><br/>
             
-            <Member mem = {mem}/>
+            <Member mem = {mem}/><br></br>
             <Button type="submit" variant="contained" color="primary">Add</Button>
         </form></div>
     )

@@ -61,8 +61,8 @@ function MyComponent(id1) {
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
           
             <li key={items.id}>
-                <Box sx={{ width:'100vw',display:"flex",justifyContent:'center',margin:'0px'}}>
-                 <Card sx={{minWidth:"50vw",maxWidth:"800px",margin:'0px'}}><CardContent> 
+                <Box sx={{ width:'80vw',display:"flex",justifyContent:'center',margin:'0px'}}>
+                 <Card sx={{minWidth:"50vw",maxWidth:"700px",margin:'0px'}}><CardContent> 
                        
                      <Typography sx={{color:'#2185d0'}} variant="h4" component="div">{items['projtitle']}</Typography> 
                      {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">{items.wiki}</Typography> */}

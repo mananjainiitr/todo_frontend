@@ -24,12 +24,16 @@ import Updatelist from './components/updatelist';
 import Updatecard from './components/updateCard';
 import Deleteproject from './components/deleteproject';
 import Dashboard from './components/Dashboard';
+import UserLogout from './components/logout';
 import Admin from './components/Admin';
 import Authenticate from './components/authenticate';
+import Log from './components/log';
+// import Logout from './components/logout';
 
 // import Addproject from "./pages/ExplorePage";
 
 export default function App() {
+
   return (<Router>
       {/* <Header /> */}
       <div>
@@ -50,10 +54,17 @@ export default function App() {
           </ul>
         </nav> */}
         <Switch> 
+        <Route path = "/todo/logout">
+          <Log />
+          </Route>
+          <Route path="/todo/login">
+          <Login />
+        </Route>
           <Route path="/todo/project/id/:id1/list/id/:id2/addcard">
             <Addcard />
           </Route>
           
+        
         <Route path = "/todo/authenticate">
           <Authenticate />
         </Route>
@@ -80,9 +91,8 @@ export default function App() {
             <Updateproject />
         </Route>
         
-        <Route path="/todo/login">
-          <Login />
-        </Route>
+        
+        
         <Route path="/todo/project/addproject">
         <Addproject />
         </Route>

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react';
 
-import {  Box  } from '@mui/material';
+import {  Box, Pagination  } from '@mui/material';
 import { Link,  useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -13,6 +13,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 
 import TextField from '@material-ui/core/TextField';
 import Deletelist from './deletelist';
+import ListDisplay from './listdisplay';
 import Header from './Header';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import MUIRichTextEditor from 'mui-rte'
@@ -65,7 +66,10 @@ const styles = theme => ({
       </form>
     );
   }
-  
+function listReq(number)
+{
+    return (<ListDisplay key = {number} number={number}/>)
+}
 function HomeIcon(props) {
     return (
         <Link to="/todo/project">
@@ -87,6 +91,14 @@ function MyComponent() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
+    const [page, setPage] = React.useState(1);
+    const [pageCount, setpageCount] = React.useState(1);
+    const handleChange = (event, value) => {
+
+        setPage(value);
+        // setIsLoaded(false);
+        
+    };
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
@@ -106,6 +118,7 @@ function MyComponent() {
             setIsLoaded(true);
             setItems(result['data']['results']);
             items = result['data']['results'];
+            setpageCount(result['data']['count']);
             console.log(items);
             
           },
@@ -126,7 +139,7 @@ function MyComponent() {
     } else {
         if (isactive)
         {
-            width = "100vw"
+            width = "90vw"
         }
       return (
         //   <p>{items[1]['projtitle']}</p>
@@ -146,7 +159,7 @@ function MyComponent() {
           <Box sx={{ display:"flex",justifyContent:'space-between',width:width}}>
               <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>Lists</h3></CardContent>
           <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
-              <Link style={{textDecoration:"none",color:"black"}} to={"/todo/project/id/"+id+"/addlist"}><h3>ADD ➕</h3></Link>
+             {isactive && <Link style={{textDecoration:"none",color:"black"}} to={"/todo/project/id/"+id+"/addlist"}><h3>ADD ➕</h3></Link>}
           </Box>
           {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
           </Box></Box>
@@ -172,33 +185,18 @@ function MyComponent() {
             </li>
           ))}
           </div> */}
-          <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
+          <div style={{maxWidth:"100vw",overflowX:"hidden",height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
           <Grid container spacing={2} style={{justifyContent:"space-between"}}>
-              
-          {addlistfunc(isactive)} 
-          <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
-            <ProjData id={id} />
-            <h3 style={{paddingLeft:'10px'}}>Project Lists</h3>
-            {items.map(item => (
-            <li style={{minwidth:width,margin:"0px"}} key={item.id}>
-                <Box style={{ minwidth:width,display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
-                <Link style={{textDecoration:'none'}} to={"/todo/project/id/"+id+"/list/id/"+item.id+"/cards"}>
-                 <Card style={{minWidth:width,maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
-                 <Grid container spacing={2}>
-                 <Avatar style={{backgroundColor:"#1976d2",margin:"20px",}}>
-                    <AssignmentIcon /></Avatar>
-                     <Typography style={{padding:"20px",color:"black"}} sx={{color:'#2185d0'}} variant="h5" component="div">{item['listtitle']}
-                     <Typography style={{fontSize:"11px",color:"#2185d0"}}>By : {item['creator']['name']}<Typography type="date" >{item['due_date'].slice(0,10)}</Typography></Typography></Typography> </Grid>
-                     {/* <CardActions>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
-                     <Deleteproject id={item.id} />
-                     </CardActions> */}
-                     </CardContent>
-                     </Card></Link></Box>
-              
-            </li>
-          ))}</div></Grid>
+          <div>
+              <div style = {{position:"fixed"}}>  
+          {addlistfunc(isactive)} </div></div>
+          <div>
+
+          {listReq(page)}
+          <Box style = {{width:width}}>
+          <Typography style={{marginLeft:'10px'}}>Page: {page}</Typography>
+          <Pagination count={Math.ceil(pageCount/5)} page={page} onChange={handleChange} /><br/><br/></Box></div>
+          </Grid>
           </div>
         </ul></div></>
       );

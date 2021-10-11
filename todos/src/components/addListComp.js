@@ -18,12 +18,45 @@ function HomeIcon(props) {
 
 function Myform()
 
- {  const tokenid = localStorage.getItem("token");   
+ {  
+    const tokenid = localStorage.getItem("token");   
     const { id } = useParams();
-    
+    function HandleListChange(e)
+    {   
+        
+        console.log(e.target.value)
+        var check
+        const tokenid = localStorage.getItem("token");
+        if(e.target.value.length)
+        {
+        axios.get("http://localhost:8000/todo/validate/list/"+id+"/"+e.target.value+"/data/",{
+            headers: { 'Authorization':tokenid,}
+        })
+            .then(
+            (result) => {
+                    check = (result['data']['count'])
+                    console.log(e.target.value.length)
+                    
+                    if(check == 1)
+                    {
+                        document.getElementById("validate").style.color = "red";
+                        document.getElementById("validate").innerHTML = "Not available";
+                    }
+                    else{
+                        document.getElementById("validate").style.color = "green";
+                        document.getElementById("validate").innerHTML = "Available";
+                    }
+                   
+                
+            })}
+            else{
+                document.getElementById("validate").style.color = "red";
+                        document.getElementById("validate").innerHTML = "Can't be Blank";
+            }
+    }
     function HandleSub(e)
     {
-    //   e.preventDefault();
+      e.preventDefault();
       console.log(e);
       var list = document.getElementById("listtitle").value;
       var desc = document.getElementById("desc").value;
@@ -66,10 +99,13 @@ function Myform()
         <h3>ADD List</h3> 
         <form id = "form" onSubmit = {e => HandleSub(e)}>
         <div style={{backgroundColor:'#FF9494',borderRadius:"5px",textAlign:"center"}}id = "err"></div>
-            <TextField style={{width:'35vw'}}type = "text"id = "listtitle" name = "listtitle" placeholder = "list title" /><br/>
-            <TextField style={{width:'35vw'}} type = "text"id = "desc" name = "desc" placeholder = "list desc." /><br/>
+        
+        
+            <div id="validate" ></div>
+            <TextField style={{width:'35vw'}}type = "text"id = "listtitle" name = "listtitle" placeholder = "List Title" onChange = {e => HandleListChange(e)} required="true"/><br/>
+            <TextField style={{width:'35vw'}} type = "text"id = "desc" name = "desc" placeholder = "List Desc" /><br/>
             
-            <TextField id="due_date"type = "datetime-local"/><br/>
+            <TextField id="due_date"type = "datetime-local"/><br/><br></br>
             <Button type="submit" variant="contained" color="primary">Add</Button>
         </form></div>
     )

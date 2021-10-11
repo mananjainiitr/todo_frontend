@@ -71,7 +71,7 @@ const styles = {
             <header style={{background:'#FFFFFF'}}>
             <Box sx={{ width:'100vw',display:"flex",justifyContent:'space-between',borderBottom: 1}}>
                 <Box  ><h3 style= {{color:'black' , textAlign:"center"}}>Hii {items[0]['name']}</h3></Box>
-                <Box  ><h3 style= {{color:'black',paddingRight :"2vw"}}>Todo</h3></Box>
+                <Box  ><h3 style= {{color:'black',paddingRight :"2vw"}}>TODO</h3></Box>
                 <DashButton name = {items[0]['name']}/>
                 {/* <Box><Link to="/todo/dashboard/project"><Avatar sx={{height:'100px',width:'100px',right:'80px'}} src="https://ver.to/wp-content/uploads/2021/08/oscar-1018x1024.png" /></Link></Box>                */}
             </Box>

@@ -58,7 +58,7 @@ function MyComponent(id1) {
     } else {
       console.log(item);
       if(isactive){
-          width = "100vw";
+          width = "96vw";
       }
       return (
         //   <p>{items[1]['projtitle']}</p>

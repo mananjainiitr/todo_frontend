@@ -52,7 +52,7 @@ function Myform()
        console.log((erro.message).slice(-3));
        if((erro.message).slice(-3)==400)
        {
-       console.log(document.getElementById("err").innerHTML = '<h3>ERROR: PLEASE ENTER UNIQUE PROJECT NAME</h3>');
+       console.log(document.getElementById("err").innerHTML = '<h3>ERROR: PLEASE ENTER UNIQUE TITLE NAME</h3>');
        }
        else{
         console.log(document.getElementById("err").innerHTML = '<h3>ERROR: Some error has occured </h3>');
@@ -68,6 +68,40 @@ function Myform()
     //         return (<Alert id = "alert" severity="error">This is an error alert — check it out!</Alert>)
     //     }
     // }
+
+    function HandleChange(e)
+    {
+        console.log(e.target.value)
+        var check
+        const tokenid = localStorage.getItem("token");
+        if(e.target.value.length)
+        {
+        axios.get("http://localhost:8000/todo/validate/project/"+e.target.value+"/data/",{
+            headers: { 'Authorization':tokenid,}
+        })
+            .then(
+            (result) => {
+                    check = (result['data']['count'])
+                    console.log(e.target.value.length)
+                    
+                    if(check == 1)
+                    {
+                        document.getElementById("validate").style.color = "red";
+                        document.getElementById("validate").innerHTML = "Not available";
+                    }
+                    else{
+                        document.getElementById("validate").style.color = "green";
+                        document.getElementById("validate").innerHTML = "Available";
+                    }
+                   
+                
+            })}
+            else{
+                document.getElementById("validate").style.color = "red";
+                        document.getElementById("validate").innerHTML = "Can't be Blank";
+            }
+    }
+        
 
     function handleMember(e)
     {   
@@ -118,7 +152,7 @@ function Myform()
     } else {
         items.map(item => (
                 
-            mem.push({"title":item["email"],"year":item["id"]})
+            mem.push({"title":item["name"],"year":item["id"]})
             
         ))
       return(
@@ -129,7 +163,10 @@ function Myform()
         <div style={{backgroundColor:'#FF9494',borderRadius:"5px",textAlign:"center"}}id = "err">
             
         </div>
-        <TextField style={{width:'30vw'}}type = "text"id = "projtitle" name = "projtitle" placeholder = "project title" /><br/><br></br>
+        
+        <div id="validate" ></div>
+        
+        <TextField style={{width:'30vw'}}type = "text"id = "projtitle" name = "projtitle" placeholder = "Project Title" onChange = {e => HandleChange(e)} required="true"/><br/><br></br>
         {/* <TextField style={{width:'30vw'}} type = "text"id = "wiki" name = "wiki" placeholder = "wiki" /> */}
         <CKEditor
           editor={ ClassicEditor }
@@ -147,7 +184,7 @@ function Myform()
             console.log(wiki)
           }}
       />
-        <Member mem = {mem}/>
+        <Member mem = {mem}/><br></br>
         <Button type="submit" variant="contained" color="primary">Add</Button>
     </form></div>
     );

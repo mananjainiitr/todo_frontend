@@ -105,9 +105,9 @@ export default function DashButton(props) {
                     onKeyDown={handleListKeyDown}
                   >
                     <Link style={{ textDecoration:"none" , color:"black" }} to="/todo/project"><MenuItem onClick={handleClose}>Home</MenuItem></Link>
-                    <Link style={{ textDecoration:"none" , color:"black" }} to="/todo/dashboard/project"><MenuItem onClick={handleClose}>Member of Projects</MenuItem></Link>
-                    <Link style={{ textDecoration:"none" , color:"black" }} to="/todo/dashboard/card"><MenuItem onClick={handleClose}>Cards Assigned</MenuItem></Link>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <Link style={{ textDecoration:"none" , color:"black" }} to="/todo/dashboard/project"><MenuItem onClick={handleClose}>DashBoard</MenuItem></Link>
+                    {/* <Link style={{ textDecoration:"none" , color:"black" }} to="/todo/dashboard/card"><MenuItem onClick={handleClose}>Cards Assigned</MenuItem></Link> */}
+                    <Link style={{ textDecoration:"none" , color:"black" }} to="/todo/logout"><MenuItem onClick={handleClose}>Logout</MenuItem></Link>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

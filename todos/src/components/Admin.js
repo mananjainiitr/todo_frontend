@@ -1,4 +1,4 @@
-import { Card, Grid } from "@material-ui/core";
+import { Avatar, Card, Grid, useMediaQuery } from "@material-ui/core";
 import { Box, Button, CardContent, Checkbox, FormControlLabel, Icon, SvgIcon, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -46,6 +46,8 @@ function HomeIcon(props) {
   }
 function MyComponent()
 {
+    var width = '35vw';
+    const isactive = useMediaQuery("(max-width : 830px)")
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
@@ -68,6 +70,10 @@ function MyComponent()
           }
         )
     }, [])
+    if (isactive)
+      {
+        width = "80vw"
+      }
     return(
         <>
         <Header token={tokenid}/>
@@ -81,13 +87,19 @@ function MyComponent()
           {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
           </Box></Box>
         <div style={{height:"80vh",listStyleType:'None',overflowY:"scroll",textAlign:"center"}}>
-        <Grid style={{justifyContent:"center"}} container spacing={3}>
+        <Grid style={{justifyContent:"center",justifyContent:"space-evenly"}} container spacing={3}>
         {items.map(item => (
-        <li style={{minWidth:"25vw"}} key={item.id}>
-        <Box style={{ minwidth:'25vw',display:"flex",justifyContent:'center',margin:'10px'}}>
-         <Card style={{minWidth:"25vw",maxWidth:"800px",margin:'0px'}}><CardContent>
+        <li style={{minWidth:width}} key={item.id}>
+        <Box style={{ minWidth:width,display:"flex",justifyContent:'center',margin:'10px'}}>
+         <Card style={{minWidth:width,maxWidth:"800px",margin:'0px'}}><CardContent>
         <form value = {item["id"]} onSubmit = {(e) => handleSubmit(e,item["id"])}>
-        <Typography sx={{ mb: 1.5 }} color="black">Email : {item['email']}</Typography>
+            
+                <div style={{maxWidth:"140px"}}>
+        <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} >
+                     {((item['name']).slice(0,1)).toUpperCase()}
+                     </Avatar></div>
+        <div style={{minWidth:width}}><Typography  sx={{ mb: 1.5 }} color="black">Name : {item['name']}</Typography>
+        <Typography  sx={{ mb: 1.5 }} color="black">Email : {item['email']}</Typography></div>
         <Typography sx={{ mb: 1.5 }} color="black">Year : {item['year']}</Typography>
         <Typography id = "is_active" sx={{ mb: 1.5 }} color="black">Is active : <Checkbox defaultChecked={item['is_active']} onChange = {(e) => handleActive(e)}></Checkbox></Typography>
         <Typography id = "admin" sx={{ mb: 1.5 }} color="black">Is Admin : <Checkbox defaultChecked={item['admin']} onChange = {(e) => handleAdmin(e)}></Checkbox></Typography>

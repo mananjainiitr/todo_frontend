@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import { Box  } from '@mui/material';
+import { Box, Pagination  } from '@mui/material';
 
 import Icon from '@mui/material/Icon';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -17,6 +17,7 @@ import Header from './Header';
 import Addproject from './addproject';
 import AddprojectComp from './addProjComponent';
 import { Avatar, Grid, useMediaQuery } from '@material-ui/core';
+import ProjectDisplay from './projectdisplay';
 // import LoadingButton from '@mui/lab/LoadingButton';
 function HomeIcon(props) {
     return (
@@ -33,26 +34,47 @@ function addprojfunc(isactive)
         return (<AddprojectComp />)
     }
 }
+function projectReq(number)
+{
+    console.log(number)
+   
+   return(<ProjectDisplay key ={number} number={number}/>)
+   
+}
 function MyComponent() {
-    var width = "50vw";
+    var width = "52vw";
     const isactive = useMediaQuery("(max-width : 830px)")
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
+    // var pageCount ;
+    const [page, setPage] = React.useState(1);
+    const [pageCount, setpageCount] = React.useState(1);
+    const handleChange = (event, value) => {
+
+        setPage(value);
+        // setIsLoaded(false);
+        
+    };
+    // MyComponent()
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
     const tokenid = localStorage.getItem("token");
     useEffect(() => {
-      axios.get("http://localhost:8000/todo/viewsets/project",{
+      axios.get("http://localhost:8000/todo/viewsets/project?page="+page,{
         headers: { 'Authorization':tokenid,}
       })
         .then(
           (result) => {
-            setIsLoaded(true);
+            
             setItems(result['data']['results']);
             items = result['data']['results'];
+            setpageCount(result['data']['count']);
+            console.log(pageCount);
             console.log(items);
+            setIsLoaded(true);
+            console.log(isLoaded);
             
           },
           // Note: it's important to handle errors here
@@ -77,48 +99,36 @@ function MyComponent() {
       return (
         //   <p>{items[1]['projtitle']}</p>
         //   <p>hi</p>
-        <>
+        <div>
+
         <Header token={tokenid}/>
         <div><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px'}}>
             <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}>
           <Box sx={{ display:"flex",justifyContent:'space-between',width:width}}>
               <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>PROJECTS</h3></CardContent>
           <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
-              <Link style={{textDecoration:"none",color:"black"}} to="/todo/project/addproject"><h3>ADD ➕</h3></Link>
+             {isactive && <Link style={{textDecoration:"none",color:"black"}} to="/todo/project/addproject"><h3>ADD ➕</h3></Link>}
           </Box>
           {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
           </Box></Box>
-          <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
+          <div style={{maxWidth:"100vw",overflowX:"hidden",height:"85vh",listStyleType:'None',overflowY:"scroll",margin:'1vw'}}>
+          
           <Grid container spacing={2} style={{justifyContent:"space-between"}}>
-          {addprojfunc(isactive)}    
+              <div>
+              <div style = {{position:"fixed"}}>
+          {addprojfunc(isactive)}    </div></div>
           {/* <AddprojectComp /> */}
-          <div style={{minwidth:"50vw",flexWrap:"wrap"}}>
-            {items.map(item => (
-            <li style={{width:width}} key={item.id}>
-                <Box sx={{ minwidth:width,display:"flex",justifyContent:'right',margin:'0px'}}>
-                <Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>
-                 <Card sx={{minWidth:width,maxWidth:"800px",margin:'0px'}}><CardContent> 
-                 <Grid container spacing={2}>
-                     <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} variant="rounded">
-                     {((item['projtitle']).slice(0,1)).toUpperCase()}
-                     </Avatar>  
-                     <Typography style={{padding:"20px"}} sx={{color:'#2185d0'}} variant="h4" component="div">{item['projtitle']}
-                     <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary"component="h1" variant="h6" gutterBottom dangerouslySetInnerHTML={{__html: item['wiki']}}></Typography>
-                     {/* <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Wiki : {item['wiki']}</Typography> */}
-                     
-                     <Typography style={{fontSize:"11px"}}>Creator : {item['creator']['name']}</Typography></Typography> </Grid>
-                     {/* <CardActions>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
-                     <Deleteproject id={item.id} />
-                     </CardActions> */}
-                     </CardContent>
-                     </Card></Link><br></br></Box><br></br>
-              
-            </li>
-          ))}</div></Grid>
+          <div>
+          {projectReq(page)}  
+          <Box style = {{width:width}}>
+          <Typography style={{marginLeft:'10px'}}>Page: {page}</Typography>
+          <Pagination count={Math.ceil(pageCount/5)} page={page} onChange={handleChange} /><br/><br/></Box></div>
+         </Grid>
+        
+         
+         
           </div>
-        </ul></div></>
+        </ul></div></div>
       );
     }
   }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import ReactDOM from 'react-dom';
 import React, { useState, useEffect } from 'react';
-import {  Box, Pagination  } from '@mui/material';
+import {  Box  } from '@mui/material';
 import { Link, Redirect, useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import SvgIcon from '@mui/material/SvgIcon';
 
 import TextField from '@material-ui/core/TextField';
-import DashCardDisplay from './dashCardDisplay';
+import Deletecard from './deletecard';
 import Header from './Header';
 import { Avatar, Grid, useMediaQuery } from '@material-ui/core';
 import AddCardComp from './addCardComp';
@@ -48,11 +48,6 @@ const styles = theme => ({
       </form>
     );
   }
-  function cardReq(number)
-{
-    console.log("a"+number)
-  return ( <DashCardDisplay key={number} number={number}/>)
-}
   
 function HomeIcon(props) {
     return (
@@ -61,17 +56,12 @@ function HomeIcon(props) {
       </SvgIcon>
     );
   }
-function MyComponent(name , email , year , is_admin) {
+function MyComponent(number) {
     var width = "40vw";
     const isactive = useMediaQuery("(max-width : 830px)")
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
-    const [pageCount, setpageCount] = React.useState(1);
-    const [page, setPage] = React.useState(1);
-    const handleChange = (event, value) => {
-      setPage(value);
-    };
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
@@ -79,8 +69,9 @@ function MyComponent(name , email , year , is_admin) {
     const { id1 } = useParams();
     const { id2 }= useParams();
     const tokenid = localStorage.getItem("token");
+    
     useEffect(() => {
-        axios.get("http://localhost:8000/todo/dashbord/card",{
+        axios.get("http://localhost:8000/todo/dashbord/card/?page="+number,{
         headers: { 'Authorization':tokenid,}
       })
         .then(
@@ -89,8 +80,8 @@ function MyComponent(name , email , year , is_admin) {
             setIsLoaded(true);
             setItems(result['data']['results']);
             items = result['data']['results'];
-            setpageCount(result['data']['count']);
             // console.log(items);
+            // setpageCount(result['data']['count']);
             
           },
           // Note: it's important to handle errors here
@@ -112,35 +103,43 @@ function MyComponent(name , email , year , is_admin) {
             width = "100vw"
         }
       return (
-        <div style={{width:width}}>
-        {/* <Header token={tokenid}/> */}
-        <div style={{width:width}}><ul style={{padding:'0px',background:'#f2f4f7',margin:'0px',width:width}}>
-        {/* <Box style={{paddingLeft:"0px"}} sx={{display:"flex",justifyContent:'right'}}> */}
-          <Box sx={{ display:"flex",justifyContent:'space-between',width:width}}>
-              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>DASHBOARD</h3></CardContent>
-          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
-          <h3>Card&nbsp;</h3>
-          </Box>
-          {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
-          </Box>
-          {/* </Box> */}
-        <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
-        <Grid container spacing={2} style={{justifyContent:"space-between"}}>
-        {/* <UserProfile name={name} email={email} year={year} is_admin={is_admin} /> */}
-        <div>
-          {cardReq(page)}
-          <Box style = {{width:width}}>
-          <Typography style={{marginLeft:'10px'}}>Page: {page}</Typography>
-          <Pagination count={Math.ceil(pageCount/5)} page={page} onChange={handleChange} /><br/><br/></Box></div>
+        <>
+        
+        <div style={{minwidth:width,flexWrap:"wrap"}}>
+          
+         
+          {items.map(item => (
+          <li style={{minwidth:width,margin:"0px"}} key={item.id}>
+              <Box style={{ minwidth:width,display:"flex",justifyContent:'right',margin:'2px',padding:"0px"}}>
+              
+               <Card style={{minWidth:width,maxWidth:"800px",margin:'0px',padding:"8px"}}><CardContent style = {{padding:"8px"}}> 
+               <Grid container spacing={2}>
+               <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} variant="rounded">
+                   {((item['cardtitle']).slice(0,1)).toUpperCase()}
+                   </Avatar>
+                   <Typography style={{padding:"20px",color:"black"}} sx={{color:'#2185d0'}} variant="h5" component="div">{item['cardtitle']}
+                   <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Desc : {item['desc']}</Typography>
+                   <Typography style={{fontSize:"11px",color:"black"}}>By : {item['creator']['name']}<Typography type="date" >{item['due_date'].slice(0,10)}</Typography></Typography>
+                   <br></br>
+                   </Typography> </Grid>
+                  
+            
+                   {/* <CardActions>
+                   <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
+                   <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
+                   <Deleteproject id={item.id} />
+                   </CardActions> */}
+                   </CardContent>
 
-        </Grid>
-        </div>
-      </ul></div></div>
+                   </Card></Box>
+            
+          </li>
+        ))}</div></>
       );
     }
   }
 
-  export default function DashCards(props)
+  export default function DashCardDisplay(props)
 
   {    
     // const search = useLocation().search;
@@ -148,5 +147,5 @@ function MyComponent(name , email , year , is_admin) {
     // localStorage.setItem("token",userName)
     //         console.log(localStorage.getItem("token"));
     //  console.log("hi");
-       return (MyComponent(props.name,props.email,props.year,props.is_admin));
+       return (MyComponent(props.number));
   }

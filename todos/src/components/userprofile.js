@@ -36,13 +36,14 @@ function Myform(name,email,year,is_admin)
 
       return(
              
-        <div style={{width:width,padding:"2vw"}} >
-        <Card style={{padding:'20px'}}>
+        <div style={{width:"100vw",padding:"2vw",display:"flex",justifyContent:"center"}} >
+        <Card style={{padding:'20px',width:width}}>
+        <div style={{textAlign:"left"}}>
         <h3>Profile</h3> 
         <Typography>NAME : {name}</Typography>
         <Typography>EMAIL : {email}</Typography>
         <Typography>YEAR : {year}</Typography>
-        {myfunc(is_admin)}
+        {myfunc(is_admin)}</div>
         </Card>
         </div>
     )

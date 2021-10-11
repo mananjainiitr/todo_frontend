@@ -1,5 +1,5 @@
-import { useState , useEffect} from 'react';
-import { Button, CardActions, CardContent, Typography } from '@mui/material';
+import React, { useState , useEffect} from 'react';
+import { Button, CardActions, CardContent, Pagination, Typography } from '@mui/material';
 import { Avatar, Card, Grid, useMediaQuery} from "@material-ui/core";
 // import Avatar from '@mui/material/Avatar';
 import { Box  } from '@mui/material';
@@ -7,20 +7,30 @@ import { Box  } from '@mui/material';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import Deleteproject from './deleteproject';
+import DashProjDisplay from './dashProjDisplay';
 import Header from './Header';
 import AddprojectComp from './addProjComponent';
 import UserProfile from './userprofile';
+import DashCards from './dashcard';
 
 
-
+function projReq(number)
+{
+    console.log(number+"b")
+  return ( <DashProjDisplay key={number} number={number}/>)
+}
 function ProjectComp(name , email , year , is_admin) {
     
-    var width = "50vw";
+    var width = "40vw";
     const isactive = useMediaQuery("(max-width : 830px)")
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     var [items, setItems] = useState([]);
+    const [pageCount, setpageCount] = React.useState(1);
+    const [page, setPage] = React.useState(1);
+    const handleChange = (event, value) => {
+      setPage(value);
+    };
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
@@ -35,6 +45,7 @@ function ProjectComp(name , email , year , is_admin) {
             setIsLoaded(true);
             setItems(result['data']['results']);
             items = result['data']['results'];
+            setpageCount(result['data']['count']);
             console.log(items);
             
           },
@@ -64,39 +75,32 @@ function ProjectComp(name , email , year , is_admin) {
           <Box sx={{ display:"flex",justifyContent:'space-between',width:width}}>
               <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>DASHBOARD</h3></CardContent>
           <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
-              <h3>Project&nbsp;</h3>
+              <h3>Profile&nbsp;</h3>
           </Box>
           {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
           </Box></Box>
           <div style={{height:"85vh",listStyleType:'None',overflowY:"scroll"}}>
           <Grid container spacing={2} style={{justifyContent:"space-between"}}>
-          <UserProfile name={name} email={email} year={year} is_admin={is_admin} />
-
-          <div style={{minwidth:width,flexWrap:"wrap"}}>
-        
-            {items.map(item => (
-            <li style={{minwidth:width}} key={item.id}>
-                <Box style={{ minwidth:width,display:"flex",justifyContent:'center',margin:'0px'}}>
-                <Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>
-                 <Card style={{minWidth:width,margin:'0px'}}><CardContent> 
-                 <Grid container spacing={2}>
-                     <Avatar style={{backgroundColor:"#1976d2",fontSize:"70px",width:"100px",height:"100px",margin:"20px"}} variant="rounded">
-                     {((item['projtitle']).slice(0,1)).toUpperCase()}
-                     </Avatar>  
-                     <Typography style={{padding:"20px"}} sx={{color:'#2185d0'}} variant="h4" component="div">{item['projtitle']}
-                     {/* <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary">Wiki : {item['wiki']}</Typography> */}
-                     <Typography style={{maxWidth:"40vw"}}sx={{ mb: 1.5 }} color="text.secondary"component="h1" variant="h6" gutterBottom dangerouslySetInnerHTML={{__html: item['wiki']}}></Typography>
-                     <Typography style={{fontSize:"11px"}}>Creator : {item['creator']['name']}</Typography></Typography> </Grid>
-                     {/* <CardActions>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id+"/list"}>View List</Link></Button>
-                     <Button variant="contained" size="small"><Link style={{textDecoration:'none'}} to={"/todo/project/id/"+item.id}>Update</Link></Button>
-                     <Deleteproject id={item.id} />
-                     </CardActions> */}
-                     </CardContent>
-                     </Card></Link><br></br></Box><br></br>
-              
-            </li>
-          ))}</div></Grid>
+          <UserProfile  name={name} email={email} year={year} is_admin={is_admin} />
+          <div style={{width:"100vw"}}>
+              <Grid container spacing={2} style={{justifyContent:"space-evenly"}}>
+           <div style={{width:width}}>
+          <Box sx={{ display:"flex",justifyContent:'space-between',width:width}}>
+              <CardContent style={{padding:"0px"}} sx={{color:"black"}}><h3>DASHBOARD</h3></CardContent>
+          <Box style={{paddingBottom:"0px",paddingTop:"0px"}} >
+              <h3>Project&nbsp;</h3>
+          </Box>
+          {/* <Button><HomeIcon sx={{ color:"white"}}color="white" /></Button>          */}
+         
+          </Box>
+          {projReq(page)}
+          <Box style = {{width:width}}>
+          <Typography style={{marginLeft:'10px'}}>Page: {page}</Typography>
+          <Pagination count={Math.ceil(pageCount/5)} page={page} onChange={handleChange} /><br/><br/></Box></div>
+          
+          <DashCards /></Grid>
+          </div>
+          </Grid>
           </div>
         </ul></div></>
       );
